@@ -1,4 +1,3 @@
-/* Variables y bases */
 :root {
     --transition-speed: 0.25s;
     --primary-color: #0d6efd;
@@ -20,14 +19,6 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Manejo de imágenes en Cards */
-.card-img-top {
-    height: 200px;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
-
 /* Badges y botones */
 .badge {
     font-weight: 600;
@@ -36,9 +27,14 @@ body {
 .btn {
     border-radius: 8px;
     font-weight: 500;
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 
-/* Contenedor de tabla adaptable */
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Tabla adaptable */
 .table-responsive {
     border-radius: 10px;
     overflow: hidden;

@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Plataforma de gestión veterinaria VetConnect">
     <title>VetConnect - Inicio</title>
-    <!-- Bootstrap 5.3.8 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos locales -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
@@ -16,7 +14,7 @@
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">VetConnect</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menuPrincipal">
@@ -34,8 +32,13 @@
     <main class="container my-5 flex-grow-1">
         
         <!-- Alerts Contextuales -->
+        <div id="alertaExito" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+            <strong>¡Operación exitosa!</strong> Mascota registrada correctamente en el sistema.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>¡Bienvenido a VetConnect!</strong> Sistema actualizado con éxito.
+            <strong>¡Bienvenido a VetConnect!</strong> Sistema actualizado y listo para operar.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
@@ -50,13 +53,16 @@
             </button>
         </div>
 
-        <!-- Grid Responsive con Cards (3 Columnas en Desktop, 2 en Tablet, 1 en Móvil) -->
+        <!-- Grid Responsive con Cards -->
         <section class="row g-4">
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="card h-100 border-0 shadow-sm">
                     <div class="card-body d-flex flex-column p-4">
-                        <h2 class="card-title h5 fw-bold text-dark">Mascotas</h2>
-                        <p class="card-text text-secondary flex-grow-1">Administra las fichas clínicas y pacientes registrados.</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="card-title h5 fw-bold text-dark mb-0">Mascotas</h2>
+                            <span class="badge bg-primary-subtle text-primary">Principal</span>
+                        </div>
+                        <p class="card-text text-secondary flex-grow-1">Administra las fichas clínicas y pacientes registrados en la veterinaria.</p>
                         <a href="mascotas.html" class="btn btn-primary w-100">Ver mascotas</a>
                     </div>
                 </article>
@@ -65,8 +71,11 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="card h-100 border-0 shadow-sm">
                     <div class="card-body d-flex flex-column p-4">
-                        <h2 class="card-title h5 fw-bold text-dark">Consultas</h2>
-                        <p class="card-text text-secondary flex-grow-1">Gestiona los controles médicos y atenciones veterinarias.</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="card-title h5 fw-bold text-dark mb-0">Consultas</h2>
+                            <span class="badge bg-info-subtle text-info">Clínica</span>
+                        </div>
+                        <p class="card-text text-secondary flex-grow-1">Gestiona los controles médicos, citas y atenciones veterinarias agendadas.</p>
                         <a href="#" class="btn btn-primary w-100">Ver consultas</a>
                     </div>
                 </article>
@@ -75,8 +84,11 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="card h-100 border-0 shadow-sm">
                     <div class="card-body d-flex flex-column p-4">
-                        <h2 class="card-title h5 fw-bold text-dark">Vacunas</h2>
-                        <p class="card-text text-secondary flex-grow-1">Consulta y actualiza el historial de vacunación preventivo.</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="card-title h5 fw-bold text-dark mb-0">Vacunas</h2>
+                            <span class="badge bg-success-subtle text-success">Preventivo</span>
+                        </div>
+                        <p class="card-text text-secondary flex-grow-1">Consulta y actualiza el historial preventivo y calendarios de vacunación.</p>
                         <a href="#" class="btn btn-primary w-100">Ver vacunas</a>
                     </div>
                 </article>
@@ -93,22 +105,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="formNuevaMascota" class="needs-validation" novalidate>
                         <div class="mb-3">
-                            <label for="nombreMascota" class="form-label">Nombre</label>
+                            <label for="nombreMascota" class="form-label">Nombre de la mascota</label>
                             <input type="text" class="form-control" id="nombreMascota" required>
+                            <div class="invalid-feedback">Por favor ingresa un nombre válido.</div>
                         </div>
                         <div class="mb-3">
                             <label for="especieMascota" class="form-label">Especie</label>
-                            <select class="form-select" id="especieMascota">
+                            <select class="form-select" id="especieMascota" required>
                                 <option value="Perro">Perro</option>
                                 <option value="Gato">Gato</option>
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="edadMascota" class="form-label">Edad (años)</label>
-                            <input type="number" class="form-control" id="edadMascota" min="0">
+                            <label for="edadMascota" class="form-label">Edad (en años)</label>
+                            <input type="number" class="form-control" id="edadMascota" min="0" max="40" required>
+                            <div class="invalid-feedback">Por favor ingresa una edad válida.</div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Guardar Mascota</button>
                     </form>
@@ -124,7 +138,7 @@
         </div>
     </footer>
 
-    <!-- Bootstrap 5.3.8 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
