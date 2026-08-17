@@ -1,53 +1,45 @@
-/* Variables y ajustes generales de UI/UX */
+/* Variables y bases */
 :root {
     --transition-speed: 0.25s;
+    --primary-color: #0d6efd;
 }
 
 body {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    color: #2b2f33;
 }
 
-/* Card y microinteracciones */
-.product-card {
-    border-radius: 16px;
-    overflow: hidden;
+/* Efectos visuales en Cards (UI/UX) */
+.card {
+    border-radius: 12px;
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
-.product-card:hover {
+.card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Manejo de imagen responsiva */
-.product-img-wrapper {
-    position: relative;
-    overflow: hidden;
-    background-color: #f8f9fa;
-    height: 240px;
-}
-
-.product-img {
-    width: 100%;
-    height: 100%;
+/* Manejo de imágenes en Cards */
+.card-img-top {
+    height: 200px;
     object-fit: cover;
-    transition: transform var(--transition-speed) ease;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
-.product-card:hover .product-img {
-    transform: scale(1.04);
+/* Badges y botones */
+.badge {
+    font-weight: 600;
 }
 
-/* Botón y estados de interacción */
-.btn-view-product {
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Contenedor de tabla adaptable */
+.table-responsive {
     border-radius: 10px;
-    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-}
-
-.btn-view-product:hover {
-    transform: translateY(-1px);
-}
-
-.btn-view-product:active {
-    transform: translateY(0);
+    overflow: hidden;
 }
