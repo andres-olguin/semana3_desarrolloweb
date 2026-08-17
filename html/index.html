@@ -3,141 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plataforma de gestión veterinaria VetConnect">
-    <title>VetConnect - Inicio</title>
+    <meta name="description" content="VetConnect UNAB - Sistema integral veterinario">
+    <title>VetConnect - Portal Veterinario UNAB</title>
+    
+    <!-- Favicon Embebido SVG (Estilo UNAB) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23002b49'/><path d='M30 40 Q50 20 70 40 Q50 60 30 40 Z' fill='%23e30613'/><circle cx='50' cy='50' r='12' fill='%23c5a059'/></svg>">
+
+    <!-- Bootstrap 5.3.8 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100">
 
-    <!-- Navbar Responsive -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm">
+    <!-- Navbar Responsive con Identidad UNAB -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-unab sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">VetConnect</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <span class="badge bg-danger rounded-pill px-2">UNAB</span>
+                <span>VetConnect</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menuPrincipal">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="mascotas.html">Mascotas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mascotas.html">Mascotas <span id="contadorMascotas" class="badge bg-danger rounded-pill ms-1">4</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="desafio-pantalla.html">Portal Académico</a></li>
+                    <li class="nav-item"><a class="nav-link" href="interfaz-mejorada.html">UX Review</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-sm btn-unab-primary px-3 w-100" href="login.html">Iniciar Sesión</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Contenido Principal -->
-    <main class="container my-5 flex-grow-1">
+    <main class="container my-4 my-md-5 flex-grow-1">
         
         <!-- Alerts Contextuales -->
-        <div id="alertaExito" class="alert alert-success alert-dismissible fade show d-none" role="alert">
-            <strong>¡Operación exitosa!</strong> Mascota registrada correctamente en el sistema.
+        <div id="alertaExito" class="alert alert-success alert-dismissible fade show d-none shadow-sm" role="alert">
+            <strong>¡Excelente!</strong> La mascota ha sido registrada exitosamente en el sistema.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>¡Bienvenido a VetConnect!</strong> Sistema actualizado y listo para operar.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        <!-- Encabezado de Sección y Botón Modal -->
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-            <div>
-                <h1 class="h2 fw-bold text-dark mb-1">Panel de Servicios</h1>
-                <p class="text-secondary mb-0">Selecciona el módulo que deseas gestionar hoy.</p>
-            </div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMascota">
-                + Nueva Mascota
-            </button>
-        </div>
-
-        <!-- Grid Responsive con Cards -->
-        <section class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100 border-0 shadow-sm">
-                    <div class="card-body d-flex flex-column p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h2 class="card-title h5 fw-bold text-dark mb-0">Mascotas</h2>
-                            <span class="badge bg-primary-subtle text-primary">Principal</span>
-                        </div>
-                        <p class="card-text text-secondary flex-grow-1">Administra las fichas clínicas y pacientes registrados en la veterinaria.</p>
-                        <a href="mascotas.html" class="btn btn-primary w-100">Ver mascotas</a>
+        <!-- Banner Hero Institucional -->
+        <section class="hero-banner p-4 p-md-5 mb-5 shadow-sm">
+            <div class="row align-items-center position-relative" style="z-index: 1;">
+                <div class="col-12 col-lg-8">
+                    <span class="badge badge-unab-gold px-3 py-2 rounded-pill mb-2 fw-bold text-uppercase">Semana 3 · Desarrollo Web</span>
+                    <h1 class="display-6 fw-bold mb-2">Gestión Clínica y Control Veterinario</h1>
+                    <p class="lead opacity-75 mb-4">Administra pacientes, historiales de vacunación y citas médicas con diseño responsive y Mobile First.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-unab-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#modalMascota">
+                            + Nueva Mascota
+                        </button>
+                        <a href="mascotas.html" class="btn btn-outline-light px-4 py-2">Ver Registros</a>
                     </div>
-                </article>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100 border-0 shadow-sm">
-                    <div class="card-body d-flex flex-column p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h2 class="card-title h5 fw-bold text-dark mb-0">Consultas</h2>
-                            <span class="badge bg-info-subtle text-info">Clínica</span>
-                        </div>
-                        <p class="card-text text-secondary flex-grow-1">Gestiona los controles médicos, citas y atenciones veterinarias agendadas.</p>
-                        <a href="#" class="btn btn-primary w-100">Ver consultas</a>
-                    </div>
-                </article>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100 border-0 shadow-sm">
-                    <div class="card-body d-flex flex-column p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h2 class="card-title h5 fw-bold text-dark mb-0">Vacunas</h2>
-                            <span class="badge bg-success-subtle text-success">Preventivo</span>
-                        </div>
-                        <p class="card-text text-secondary flex-grow-1">Consulta y actualiza el historial preventivo y calendarios de vacunación.</p>
-                        <a href="#" class="btn btn-primary w-100">Ver vacunas</a>
-                    </div>
-                </article>
+                </div>
             </div>
         </section>
+
+        <!-- Grid Responsive con 3 Cards de Servicios -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="h4 fw-bold text-dark mb-0">Módulos de Atención</h2>
+                    <p class="text-muted small mb-0">Acceso rápido a las operaciones veterinarias</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Card 1: Mascotas -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card card-unab card-accent-navy h-100">
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h3 class="h5 fw-bold text-dark mb-0">Mascotas</h3>
+                                <span class="badge badge-unab-navy px-2 py-1 rounded">Módulo 01</span>
+                            </div>
+                            <p class="text-secondary flex-grow-1">Administra las fichas clínicas, pacientes registrados y datos de contacto directo de los tutores.</p>
+                            <a href="mascotas.html" class="btn btn-unab-navy w-100">Ver mascotas</a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Card 2: Consultas -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card card-unab card-accent-red h-100">
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h3 class="h5 fw-bold text-dark mb-0">Consultas</h3>
+                                <span class="badge badge-unab-red px-2 py-1 rounded">Módulo 02</span>
+                            </div>
+                            <p class="text-secondary flex-grow-1">Gestiona las atenciones clínicas, recetas médicas y el seguimiento postoperatorio.</p>
+                            <a href="#" class="btn btn-unab-primary w-100">Ver consultas</a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Card 3: Vacunas -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card card-unab card-accent-gold h-100">
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h3 class="h5 fw-bold text-dark mb-0">Vacunas</h3>
+                                <span class="badge badge-unab-gold px-2 py-1 rounded">Módulo 03</span>
+                            </div>
+                            <p class="text-secondary flex-grow-1">Consulta y actualiza el historial preventivo y calendarios de inmunización obligatorios.</p>
+                            <a href="#" class="btn btn-outline-dark w-100">Ver vacunas</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Modal: Registro de Mascota -->
+    <!-- Modal Funcional: Registrar Mascota -->
     <div class="modal fade" id="modalMascota" tabindex="-1" aria-labelledby="modalMascotaLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header">
-                    <h2 class="modal-title h5 fw-bold" id="modalMascotaLabel">Registrar Nueva Mascota</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header navbar-unab text-white">
+                    <h5 class="modal-title fw-bold" id="modalMascotaLabel">Registrar Nueva Mascota</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <form id="formNuevaMascota" class="needs-validation" novalidate>
                         <div class="mb-3">
-                            <label for="nombreMascota" class="form-label">Nombre de la mascota</label>
-                            <input type="text" class="form-control" id="nombreMascota" required>
-                            <div class="invalid-feedback">Por favor ingresa un nombre válido.</div>
+                            <label for="nombreMascota" class="form-label fw-semibold">Nombre de la Mascota</label>
+                            <input type="text" class="form-control" id="nombreMascota" placeholder="Ej. Pelusa" required>
+                            <div class="invalid-feedback">Por favor introduce un nombre.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="especieMascota" class="form-label">Especie</label>
-                            <select class="form-select" id="especieMascota" required>
-                                <option value="Perro">Perro</option>
-                                <option value="Gato">Gato</option>
-                                <option value="Otro">Otro</option>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label for="especieMascota" class="form-label fw-semibold">Especie</label>
+                                <select class="form-select" id="especieMascota" required>
+                                    <option value="Perro">Perro</option>
+                                    <option value="Gato">Gato</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="edadMascota" class="form-label fw-semibold">Edad (Años)</label>
+                                <input type="number" class="form-control" id="edadMascota" min="0" max="35" placeholder="Ej. 3" required>
+                                <div class="invalid-feedback">Ingresa una edad.</div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="estadoMascota" class="form-label fw-semibold">Estado Clínico</label>
+                            <select class="form-select" id="estadoMascota">
+                                <option value="Activo">Activo / Saludable</option>
+                                <option value="En tratamiento">En tratamiento</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="edadMascota" class="form-label">Edad (en años)</label>
-                            <input type="number" class="form-control" id="edadMascota" min="0" max="40" required>
-                            <div class="invalid-feedback">Por favor ingresa una edad válida.</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Guardar Mascota</button>
+                        <button type="submit" class="btn btn-unab-primary w-100 py-2">Guardar Mascota</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer Semántico -->
-    <footer class="bg-white border-top py-3 text-center text-muted small">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 VetConnect - Universidad Andrés Bello.</p>
+    <!-- Footer Institucional -->
+    <footer class="bg-dark text-white py-4 mt-auto border-top border-danger border-3">
+        <div class="container text-center text-md-between d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <span class="small">&copy; 2026 Universidad Andrés Bello - Desarrollo Web y Móvil.</span>
+            <span class="small text-muted">VetConnect · Proyecto Semestral Framework Frontend.</span>
         </div>
     </footer>
 
+    <!-- Scripts Bootstrap y Lógica JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>

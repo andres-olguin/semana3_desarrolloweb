@@ -3,70 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal Académico UNAB - Mobile First">
-    <title>Portal Académico UNAB</title>
+    <meta name="description" content="Portal Académico UNAB - Mobile First & Responsive">
+    <title>Portal Estudiantil - Universidad Andrés Bello</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23002b49'/><path d='M30 40 Q50 20 70 40 Q50 60 30 40 Z' fill='%23e30613'/><circle cx='50' cy='50' r='12' fill='%23c5a059'/></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100">
 
-    <header class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm">
+    <!-- Encabezado / Navbar Mobile First -->
+    <header class="navbar navbar-expand-lg navbar-dark navbar-unab sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Portal UNAB</a>
+            <a href="index.html" class="btn btn-sm btn-outline-light">Ir a VetConnect</a>
         </div>
     </header>
 
     <main class="container my-4 my-md-5 flex-grow-1">
-        <!-- Hero Mobile First: Lo esencial primero -->
-        <section class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-4 text-center text-md-start">
+        <!-- Hero Section con regla de comprensión de 5 segundos -->
+        <section class="hero-banner p-4 p-md-5 mb-4 text-center text-md-start">
             <div class="row align-items-center">
                 <div class="col-12 col-md-8">
-                    <h1 class="h2 fw-bold text-dark">Bienvenido a tu espacio académico</h1>
-                    <p class="text-secondary mb-3 mb-md-0">Accede directamente a tus cursos, horarios y solicitudes en línea.</p>
+                    <span class="badge bg-danger rounded-pill px-3 py-1 mb-2 text-uppercase">Periodo Académico 2026</span>
+                    <h1 class="h2 fw-bold text-white mb-2">Bienvenido a tu Espacio Universitario</h1>
+                    <p class="opacity-75 mb-3 mb-md-0">Consulta tus asignaturas semestrales, calificaciones y trámites en un solo lugar.</p>
                 </div>
                 <div class="col-12 col-md-4 text-md-end">
-                    <a href="#bloques-academicos" class="btn btn-primary btn-lg w-100 w-md-auto">Ver mis clases</a>
+                    <a href="#bloques-unab" class="btn btn-unab-primary btn-lg w-100 w-md-auto">Ver mis cursos</a>
                 </div>
             </div>
         </section>
 
-        <!-- Tres bloques funcionales / Cards -->
-        <section id="bloques-academicos" class="row g-4">
+        <!-- Tres Cards Funcionales con Grid Adaptable -->
+        <section id="bloques-unab" class="row g-4">
             <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100 border-0 shadow-sm">
+                <article class="card card-unab card-accent-navy h-100">
                     <div class="card-body p-4 d-flex flex-column">
-                        <h2 class="h5 fw-bold text-dark">Mis Asignaturas</h2>
-                        <p class="text-secondary flex-grow-1">Consulta material de clases, evaluaciones y notas actualizadas de tu semestre.</p>
-                        <a href="#" class="btn btn-outline-primary w-100">Ir a Cursos</a>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="h5 fw-bold text-dark mb-0">Mis Cursos</h2>
+                            <span class="badge badge-unab-navy">Aula Virtual</span>
+                        </div>
+                        <p class="text-secondary flex-grow-1">Revisa material docente, syllabus, foros interactivos y entrega de trabajos.</p>
+                        <a href="#" class="btn btn-unab-navy w-100">Acceder al Aula</a>
                     </div>
                 </article>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100 border-0 shadow-sm">
+                <article class="card card-unab card-accent-red h-100">
                     <div class="card-body p-4 d-flex flex-column">
-                        <h2 class="h5 fw-bold text-dark">Horario Semanal</h2>
-                        <p class="text-secondary flex-grow-1">Revisa tus salas de clase, bloques lectivos y laboratorios programados.</p>
-                        <a href="#" class="btn btn-outline-primary w-100">Ver Horario</a>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="h5 fw-bold text-dark mb-0">Horarios & Salas</h2>
+                            <span class="badge badge-unab-red">Sede Activa</span>
+                        </div>
+                        <p class="text-secondary flex-grow-1">Consulta tus bloques de clases presenciales, laboratorios y talleres semanales.</p>
+                        <a href="#" class="btn btn-unab-primary w-100">Ver Horario</a>
                     </div>
                 </article>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <article class="card h-100 border-0 shadow-sm">
+                <article class="card card-unab card-accent-gold h-100">
                     <div class="card-body p-4 d-flex flex-column">
-                        <h2 class="h5 fw-bold text-dark">Certificados y Trámites</h2>
-                        <p class="text-secondary flex-grow-1">Solicita certificados de alumno regular y gestiona solicitudes curriculares.</p>
-                        <a href="#" class="btn btn-outline-primary w-100">Gestionar</a>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="h5 fw-bold text-dark mb-0">Certificados</h2>
+                            <span class="badge badge-unab-gold">Autogestión</span>
+                        </div>
+                        <p class="text-secondary flex-grow-1">Emite certificados de alumno regular y concentración de notas con firma digital.</p>
+                        <a href="#" class="btn btn-outline-dark w-100">Generar Documento</a>
                     </div>
                 </article>
             </div>
         </section>
     </main>
 
-    <footer class="bg-white border-top py-3 text-center text-muted small">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 Universidad Andrés Bello.</p>
+    <footer class="bg-dark text-white py-3 mt-auto border-top border-danger border-3">
+        <div class="container text-center">
+            <span class="small">&copy; 2026 Universidad Andrés Bello.</span>
         </div>
     </footer>
 

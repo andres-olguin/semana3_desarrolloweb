@@ -4,64 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VetConnect - Mascotas Registradas</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23002b49'/><path d='M30 40 Q50 20 70 40 Q50 60 30 40 Z' fill='%23e30613'/><circle cx='50' cy='50' r='12' fill='%23c5a059'/></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-unab sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">VetConnect</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <span class="badge bg-danger rounded-pill px-2">UNAB</span>
+                <span>VetConnect</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menuPrincipal">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link active" href="mascotas.html">Mascotas</a></li>
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html">Iniciar Sesión</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-sm btn-unab-primary px-3 w-100" href="login.html">Iniciar Sesión</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Contenido Principal -->
-    <main class="container my-5 flex-grow-1">
-        <div class="card border-0 shadow-sm">
+    <main class="container my-4 my-md-5 flex-grow-1">
+        <div class="card card-unab">
             <div class="card-body p-4">
-                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-2">
-                    <div>
-                        <h1 class="h3 fw-bold text-dark mb-1">Mascotas Registradas</h1>
-                        <p class="text-secondary mb-0">Listado de pacientes vinculados a la base de datos.</p>
-                    </div>
-                    <a href="index.html" class="btn btn-outline-primary btn-sm align-self-start align-self-sm-center">Volver al Inicio</a>
-                </div>
                 
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                    <div>
+                        <h1 class="h3 fw-bold text-dark mb-1">Mascotas registradas</h1>
+                        <p class="text-muted small mb-0">Base de datos dinámica vinculada con almacenamiento local</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="index.html" class="btn btn-outline-secondary btn-sm">Volver al Panel</a>
+                    </div>
+                </div>
+
+                <!-- Filtros y Búsqueda en tiempo real -->
+                <div class="row g-2 mb-4">
+                    <div class="col-12 col-md-8">
+                        <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por nombre o especie...">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <select id="filtroEspecie" class="form-select">
+                            <option value="Todos">Todas las especies</option>
+                            <option value="Perro">Perros</option>
+                            <option value="Gato">Gatos</option>
+                            <option value="Otro">Otros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabla Responsive -->
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle mb-0">
-                        <thead class="table-light">
+                    <table class="table table-striped table-hover align-middle mb-0 table-unab">
+                        <thead>
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Especie</th>
-                                <th scope="col">Edad</th>
-                                <th scope="col">Estado</th>
+                                <th>Nombre</th>
+                                <th>Especie</th>
+                                <th>Edad</th>
+                                <th>Estado</th>
+                                <th class="text-end">Acción</th>
                             </tr>
                         </thead>
-                        <tbody id="tabla-mascotas-body">
-                            <!-- Inserción dinámica vía JavaScript -->
+                        <tbody id="tablaMascotasBody">
+                            <!-- Filas dinámicas generadas en main.js -->
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-top py-3 text-center text-muted small">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 VetConnect - Universidad Andrés Bello.</p>
+    <footer class="bg-dark text-white py-3 mt-auto border-top border-danger border-3">
+        <div class="container text-center">
+            <span class="small">&copy; 2026 Universidad Andrés Bello - VetConnect.</span>
         </div>
     </footer>
 

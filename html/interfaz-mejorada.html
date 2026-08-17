@@ -3,53 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafío Final - Interfaz Mejorada</title>
+    <title>UX Review - Interfaz Optimizada</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23002b49'/><path d='M30 40 Q50 20 70 40 Q50 60 30 40 Z' fill='%23e30613'/><circle cx='50' cy='50' r='12' fill='%23c5a059'/></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100">
 
-    <header class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-unab sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">VetConnect Pro</a>
+            <a class="navbar-brand fw-bold" href="index.html">VetConnect · UX Review</a>
+            <a href="index.html" class="btn btn-sm btn-outline-light">Volver</a>
         </div>
-    </header>
+    </nav>
 
     <main class="container my-5 flex-grow-1">
-        <div class="row justify-content-center mb-5">
-            <div class="col-12 col-lg-10">
-                <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border-0">
-                    <h1 class="h3 fw-bold text-dark mb-3">Rediseño y Optimización UI/UX</h1>
-                    <p class="text-secondary mb-4">Esta vista resuelve los problemas de falta de contraste, desorden visual y ausencia de jerarquía de la interfaz anterior.</p>
-                    
-                    <div class="row g-3">
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 bg-light rounded-3 border">
-                                <span class="fw-bold text-primary d-block mb-1">1. Jerarquía</span>
-                                <span class="small text-muted">Uso de títulos claros y pesos tipográficos consistentes.</span>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 bg-light rounded-3 border">
-                                <span class="fw-bold text-primary d-block mb-1">2. Espaciado</span>
-                                <span class="small text-muted">Estructura limpia con paddings y márgenes regulares de Bootstrap.</span>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 bg-light rounded-3 border">
-                                <span class="fw-bold text-primary d-block mb-1">3. Mobile First</span>
-                                <span class="small text-muted">Lectura fluida y botones de toque cómodo en smartphones.</span>
-                            </div>
-                        </div>
+        <div class="card card-unab p-4 p-md-5 mb-4">
+            <h1 class="h3 fw-bold text-dark mb-2">Evaluación y Rediseño de Usabilidad (UX Review)</h1>
+            <p class="text-secondary mb-4">Justificación técnica de los cambios efectuados sobre la interfaz base para garantizar accesibilidad y ergonomía visual.</p>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 bg-light rounded-3 border-start border-primary border-4 h-100">
+                        <h2 class="h6 fw-bold text-dark mb-1">1. Jerarquía Visual</h2>
+                        <p class="small text-muted mb-0">Uso de títulos estructurados (H1-H3), tipografías diferenciadas y botones primarios destacados.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 bg-light rounded-3 border-start border-danger border-4 h-100">
+                        <h2 class="h6 fw-bold text-dark mb-1">2. Espaciado y Ritmo</h2>
+                        <p class="small text-muted mb-0">Eliminación de elementos amontonados usando el sistema de espaciado estándar (`g-4`, `p-4`, `my-5`).</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 bg-light rounded-3 border-start border-warning border-4 h-100">
+                        <h2 class="h6 fw-bold text-dark mb-1">3. Ratio de Contraste</h2>
+                        <p class="small text-muted mb-0">Combinación de azul marino (`#002b49`), blanco y rojo institucional para cumplir normas WCAG AA.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 bg-light rounded-3 border-start border-success border-4 h-100">
+                        <h2 class="h6 fw-bold text-dark mb-1">4. Mobile First</h2>
+                        <p class="small text-muted mb-0">Diseño pensado desde 375px con controles de toque accesibles y sin scroll horizontal.</p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-white border-top py-3 text-center text-muted small">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 VetConnect - Universidad Andrés Bello.</p>
+    <footer class="bg-dark text-white py-3 mt-auto border-top border-danger border-3">
+        <div class="container text-center">
+            <span class="small">&copy; 2026 Universidad Andrés Bello.</span>
         </div>
     </footer>
 
