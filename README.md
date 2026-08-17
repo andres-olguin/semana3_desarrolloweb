@@ -1,5 +1,5 @@
-# Desarrollo Web y Móvil - Semana 3
-**Proyecto:** VetConnect & Desafíos UI/UX con Bootstrap 5  
+# Desarrollo Web y Móvil - Semana 3[cite: 1]
+**Proyecto:** VetConnect Enterprise - Plataforma Frontend con Bootstrap 5 & UI/UX[cite: 1]  
 **Institución:** Universidad Andrés Bello  
 
 ---
@@ -17,6 +17,8 @@ semana3_desarrolloweb/
 ├── html/
 │   ├── index.html
 │   ├── mascotas.html
+│   ├── consultas.html
+│   ├── vacunas.html
 │   ├── contacto.html
 │   ├── login.html
 │   ├── desafio-pantalla.html

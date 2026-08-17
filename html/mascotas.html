@@ -10,6 +10,8 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;"></div>
+
     <nav class="navbar navbar-expand-lg navbar-dark navbar-unab sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
@@ -23,8 +25,10 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link active" href="mascotas.html">Mascotas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="consultas.html">Consultas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vacunas.html">Vacunas</a></li>
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0" id="navAuthContainer">
                         <a class="btn btn-sm btn-unab-primary px-3 w-100" href="login.html">Iniciar Sesión</a>
                     </li>
                 </ul>
@@ -38,18 +42,20 @@
                 
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                     <div>
-                        <h1 class="h3 fw-bold text-dark mb-1">Mascotas registradas</h1>
-                        <p class="text-muted small mb-0">Base de datos dinámica vinculada con almacenamiento local</p>
+                        <h1 class="h3 fw-bold mb-1">Mascotas Registradas[cite: 1]</h1>
+                        <p class="text-muted small mb-0">Base de datos dinámica con exportación y filtros en tiempo real</p>
                     </div>
-                    <div class="d-flex gap-2">
-                        <a href="index.html" class="btn btn-outline-secondary btn-sm">Volver al Panel</a>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-outline-secondary btn-sm" onclick="exportarMascotasJSON()">📥 Exportar JSON</button>
+                        <button class="btn btn-outline-success btn-sm" onclick="exportarMascotasCSV()">📊 Exportar CSV</button>
+                        <a href="index.html" class="btn btn-unab-navy btn-sm">Volver al Panel</a>
                     </div>
                 </div>
 
-                <!-- Filtros y Búsqueda en tiempo real -->
+                <!-- Búsqueda y Filtros[cite: 1] -->
                 <div class="row g-2 mb-4">
                     <div class="col-12 col-md-8">
-                        <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por nombre o especie...">
+                        <input type="text" id="inputBuscar" class="form-control" placeholder="Buscar por nombre, especie o tutor...">
                     </div>
                     <div class="col-12 col-md-4">
                         <select id="filtroEspecie" class="form-select">
@@ -61,7 +67,7 @@
                     </div>
                 </div>
 
-                <!-- Tabla Responsive -->
+                <!-- Tabla Responsive[cite: 1] -->
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle mb-0 table-unab">
                         <thead>
@@ -69,12 +75,13 @@
                                 <th>Nombre</th>
                                 <th>Especie</th>
                                 <th>Edad</th>
+                                <th>Tutor / Contacto</th>
                                 <th>Estado</th>
                                 <th class="text-end">Acción</th>
                             </tr>
                         </thead>
                         <tbody id="tablaMascotasBody">
-                            <!-- Filas dinámicas generadas en main.js -->
+                            <!-- Inserción dinámica JS -->
                         </tbody>
                     </table>
                 </div>

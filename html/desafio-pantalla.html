@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal Académico UNAB - Mobile First & Responsive">
+    <meta name="description" content="Portal Académico UNAB - Mobile First[cite: 1]">
     <title>Portal Estudiantil - Universidad Andrés Bello</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23002b49'/><path d='M30 40 Q50 20 70 40 Q50 60 30 40 Z' fill='%23e30613'/><circle cx='50' cy='50' r='12' fill='%23c5a059'/></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,7 +11,8 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- Encabezado / Navbar Mobile First -->
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;"></div>
+
     <header class="navbar navbar-expand-lg navbar-dark navbar-unab sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Portal UNAB</a>
@@ -20,7 +21,7 @@
     </header>
 
     <main class="container my-4 my-md-5 flex-grow-1">
-        <!-- Hero Section con regla de comprensión de 5 segundos -->
+        <!-- Hero Section: Regla de 5 segundos[cite: 1] -->
         <section class="hero-banner p-4 p-md-5 mb-4 text-center text-md-start">
             <div class="row align-items-center">
                 <div class="col-12 col-md-8">
@@ -34,17 +35,17 @@
             </div>
         </section>
 
-        <!-- Tres Cards Funcionales con Grid Adaptable -->
+        <!-- Tres Cards Funcionales[cite: 1] -->
         <section id="bloques-unab" class="row g-4">
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="card card-unab card-accent-navy h-100">
                     <div class="card-body p-4 d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h2 class="h5 fw-bold text-dark mb-0">Mis Cursos</h2>
+                            <h2 class="h5 fw-bold mb-0">Mis Cursos</h2>
                             <span class="badge badge-unab-navy">Aula Virtual</span>
                         </div>
-                        <p class="text-secondary flex-grow-1">Revisa material docente, syllabus, foros interactivos y entrega de trabajos.</p>
-                        <a href="#" class="btn btn-unab-navy w-100">Acceder al Aula</a>
+                        <p class="text-muted flex-grow-1">Revisa material docente, syllabus, foros interactivos y entrega de evaluaciones.</p>
+                        <button class="btn btn-unab-navy w-100" onclick="mostrarToast('Aula Virtual', 'Conectando con el servidor académico...', 'primary')">Acceder al Aula</button>
                     </div>
                 </article>
             </div>
@@ -53,11 +54,11 @@
                 <article class="card card-unab card-accent-red h-100">
                     <div class="card-body p-4 d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h2 class="h5 fw-bold text-dark mb-0">Horarios & Salas</h2>
+                            <h2 class="h5 fw-bold mb-0">Horarios & Salas</h2>
                             <span class="badge badge-unab-red">Sede Activa</span>
                         </div>
-                        <p class="text-secondary flex-grow-1">Consulta tus bloques de clases presenciales, laboratorios y talleres semanales.</p>
-                        <a href="#" class="btn btn-unab-primary w-100">Ver Horario</a>
+                        <p class="text-muted flex-grow-1">Consulta tus bloques de clases presenciales, laboratorios y talleres semanales.</p>
+                        <button class="btn btn-unab-primary w-100" onclick="mostrarToast('Horarios', 'Cargando planificación semanal...', 'primary')">Ver Horario</button>
                     </div>
                 </article>
             </div>
@@ -66,11 +67,11 @@
                 <article class="card card-unab card-accent-gold h-100">
                     <div class="card-body p-4 d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h2 class="h5 fw-bold text-dark mb-0">Certificados</h2>
+                            <h2 class="h5 fw-bold mb-0">Certificados</h2>
                             <span class="badge badge-unab-gold">Autogestión</span>
                         </div>
-                        <p class="text-secondary flex-grow-1">Emite certificados de alumno regular y concentración de notas con firma digital.</p>
-                        <a href="#" class="btn btn-outline-dark w-100">Generar Documento</a>
+                        <p class="text-muted flex-grow-1">Emite certificados de alumno regular y concentración de notas con firma digital.</p>
+                        <button class="btn btn-outline-dark w-100" onclick="mostrarToast('Certificados', 'Generando documento oficial en PDF...', 'success')">Generar Documento</button>
                     </div>
                 </article>
             </div>
@@ -84,5 +85,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
