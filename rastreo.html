@@ -1,0 +1,66 @@
+<main class="container py-5 flex-grow-1">
+    <div class="card card-unab p-4 p-md-5 mx-auto shadow-sm" style="max-width: 800px;">
+        
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
+            <h2 class="h4 fw-bold mb-2 mb-md-0">Guía: <span style="color: var(--unab-navy);">#9876543210</span></h2>
+            <span id="estado-actual" class="badge rounded-pill px-3 py-2" style="background-color: var(--unab-gold); color: #000; font-size: 0.9rem;">En Tránsito</span>
+        </div>
+
+        <!-- Componente de Línea de Tiempo -->
+        <div class="timeline-container position-relative py-2 mb-5">
+            <!-- Línea base de fondo -->
+            <div class="position-absolute top-50 start-0 translate-middle-y w-100 bg-secondary opacity-25" style="height: 4px; z-index: 1;"></div>
+            <!-- Línea de progreso (Controlada por JS) -->
+            <div id="barra-progreso" class="position-absolute top-50 start-0 translate-middle-y" style="background-color: var(--unab-red); height: 4px; width: 66%; z-index: 2; transition: width 0.4s ease;"></div>
+
+            <div class="d-flex justify-content-between position-relative" style="z-index: 3;">
+                
+                <!-- Nodo 1: Recolectado (Completado) -->
+                <div class="timeline-step text-center">
+                    <div class="timeline-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 fw-bold" style="width: 45px; height: 45px;">✓</div>
+                    <span class="small fw-bold">Recolectado</span>
+                </div>
+                
+                <!-- Nodo 2: En Centro (Completado) -->
+                <div class="timeline-step text-center">
+                    <div class="timeline-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 fw-bold" style="width: 45px; height: 45px;">✓</div>
+                    <span class="small fw-bold">En Centro</span>
+                </div>
+                
+                <!-- Nodo 3: En Tránsito (Activo) -->
+                <div class="timeline-step text-center">
+                    <div class="timeline-icon text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2 fw-bold shadow-lg border border-3 border-white" style="background-color: var(--unab-red); width: 45px; height: 45px; transform: scale(1.1);">🚚</div>
+                    <span class="small fw-bold" style="color: var(--unab-navy);">En Tránsito</span>
+                </div>
+                
+                <!-- Nodo 4: Entregado (Pendiente) -->
+                <div class="timeline-step text-center">
+                    <div class="timeline-icon bg-light text-muted border rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 45px; height: 45px;">🏠</div>
+                    <span class="small text-muted">Entregado</span>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Detalles Operativos -->
+        <div class="row g-3 rounded p-3" style="background-color: var(--bg-surface);">
+            <div class="col-6 col-md-3 border-end">
+                <span class="text-muted small d-block text-uppercase fw-bold">Origen</span>
+                <span class="text-dark fs-6">Santiago</span>
+            </div>
+            <div class="col-6 col-md-3 border-end">
+                <span class="text-muted small d-block text-uppercase fw-bold">Destino</span>
+                <span class="text-dark fs-6">Viña del Mar</span>
+            </div>
+            <div class="col-6 col-md-3 border-end">
+                <span class="text-muted small d-block text-uppercase fw-bold">Peso Total</span>
+                <span class="text-dark fs-6">2.5 kg</span>
+            </div>
+            <div class="col-6 col-md-3">
+                <span class="text-muted small d-block text-uppercase fw-bold">Llegada Est.</span>
+                <span class="fw-bold" style="color: var(--unab-red);">Mañana, 14:00</span>
+            </div>
+        </div>
+
+    </div>
+</main>
