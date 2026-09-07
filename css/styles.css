@@ -4,17 +4,18 @@
   --nt-cyan: #00d2ff;
   --nt-unab-red: #a6192e;
   --nt-unab-hover: #c41f37;
-  --nt-border: rgba(0, 210, 255, 0.15);
-  --nt-text-muted: #8c9ba5;
+  --nt-border: rgba(0, 210, 255, 0.25);
+  --nt-text-light: #ffffff;
+  --nt-text-muted: #cbd5e1;
 }
 
 body {
   background-color: #090e1a;
-  color: #e9ecef;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--nt-text-light);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* NAVBAR & HEADER */
+/* NAVBAR */
 .navbar-tech {
   background-color: var(--nt-dark) !important;
   border-bottom: 1px solid var(--nt-border);
@@ -35,26 +36,41 @@ body {
   vertical-align: middle;
 }
 
+/* INPUTS Y TEXTOS VISIBLES */
+.form-control, .form-select {
+  background-color: #0b1324 !important;
+  border: 1px solid #334155 !important;
+  color: #ffffff !important;
+}
+
+.form-control::placeholder {
+  color: #94a3b8 !important;
+}
+
+.form-label, .text-muted-custom {
+  color: #cbd5e1 !important;
+}
+
 /* HERO SECTION */
 .hero-shopify {
-  background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.08) 0%, rgba(7, 11, 20, 0.95) 75%),
+  background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.1) 0%, rgba(7, 11, 20, 0.95) 75%),
               linear-gradient(180deg, #070b14 0%, #090e1a 100%);
   border-bottom: 1px solid var(--nt-border);
 }
 
-/* TARJETAS DE PRODUCTO SHOPIFY STYLE */
+/* TARJETAS DE PRODUCTO */
 .card-shop {
   background-color: var(--nt-card-bg);
   border: 1px solid var(--nt-border);
   border-radius: 10px;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   overflow: hidden;
 }
 
 .card-shop:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: var(--nt-cyan);
-  box-shadow: 0 12px 28px rgba(0, 210, 255, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 210, 255, 0.15);
 }
 
 .card-shop-img-wrapper {
@@ -71,20 +87,19 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease;
 }
 
 .card-shop:hover .card-shop-img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-/* BOTONES & ACCIONES */
+/* BOTONES */
 .btn-unab {
   background-color: var(--nt-unab-red);
   color: #fff;
   border: none;
   font-weight: 600;
-  transition: background-color 0.2s;
 }
 .btn-unab:hover {
   background-color: var(--nt-unab-hover);
@@ -104,25 +119,44 @@ body {
 
 .badge-stock {
   font-size: 0.7rem;
-  background: rgba(0, 210, 255, 0.12);
+  background: rgba(0, 210, 255, 0.15);
   color: var(--nt-cyan);
-  border: 1px solid rgba(0, 210, 255, 0.3);
+  border: 1px solid var(--nt-cyan);
 }
 
-/* MODAL Y OFFCANVAS DARK */
+/* MODAL Y OFFCANVAS */
 .modal-content, .offcanvas {
   background-color: var(--nt-card-bg);
-  color: #e9ecef;
+  color: #ffffff;
   border: 1px solid var(--nt-border);
 }
-.form-control, .form-select {
-  background-color: #070b14;
-  border: 1px solid #1e293b;
-  color: #fff;
+
+/* TOAST FLOTANTE DEL CARRITO */
+.cart-floating-toast {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1080;
+  background: #0f172a;
+  border: 1px solid var(--nt-cyan);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border-radius: 50px;
+  padding: 10px 20px;
+  display: none;
+  align-items: center;
+  gap: 15px;
+  animation: slideUp 0.3s ease;
 }
-.form-control:focus, .form-select:focus {
-  background-color: #070b14;
-  border-color: var(--nt-cyan);
-  color: #fff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 210, 255, 0.2);
+
+@keyframes slideUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.review-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--nt-cyan);
 }
