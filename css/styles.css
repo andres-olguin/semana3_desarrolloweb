@@ -160,3 +160,21 @@ body {
   object-fit: cover;
   border: 2px solid var(--nt-cyan);
 }
+
+/* FORZAR CONTRASTE ALTO */
+.form-label, 
+label, 
+.text-muted-custom, 
+aside span, 
+aside div {
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+#cartToast {
+  display: none !important;
+}
+
+#cartToast.show {
+  display: flex !important;
+}

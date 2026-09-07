@@ -35,7 +35,6 @@ for (let i = 1; i <= 2400; i++) {
   });
 }
 
-// RESEÑAS REALISTAS
 const RESEÑAS_POOL = [
   { usuario: "Camila Rojas", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80", rating: 5, texto: "Llegó al día siguiente a Viña del Mar. Excelente empaque térmico, rinde perfecto en renders." },
   { usuario: "Matías Soto", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", rating: 4, texto: "Muy buen producto. Cumple con la frecuencia prometida, aunque los ventiladores son algo ruidosos al 100%." },
@@ -43,50 +42,25 @@ const RESEÑAS_POOL = [
   { usuario: "Sofía Morales", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", rating: 3, texto: "El rendimiento es bueno pero el manual venía solo en inglés. Tuve que pedir asistencia técnica." }
 ];
 
-// ESTADOS
+// ESTADOS GLOBALES
 let paginaActual = 1;
 const ITEMS_POR_PAGINA = 24;
 let carrito = [];
 let favoritos = new Set();
 let prodSeleccionado = null;
 
-// ELEMENTOS DOM
-const grillaProductos = document.getElementById("grillaProductos");
-const contadorProductos = document.getElementById("contadorProductos");
-const inputBuscar = document.getElementById("inputBuscar");
-const selectCategoria = document.getElementById("selectCategoria");
-const rangePrecio = document.getElementById("rangePrecio");
-const labelPrecioMax = document.getElementById("labelPrecioMax");
-const btnLimpiarFiltros = document.getElementById("btnLimpiarFiltros");
-const listaCarrito = document.getElementById("listaCarrito");
-const totalCarrito = document.getElementById("totalCarrito");
-const badgeCarrito = document.getElementById("badgeCarrito");
-const badgeFavoritos = document.getElementById("badgeFavoritos");
-const paginadorBotones = document.getElementById("paginadorBotones");
-const paginadorInferior = document.getElementById("paginadorInferior");
-const contenedorAlertas = document.getElementById("contenedorAlertas");
-const cartToast = document.getElementById("cartToast");
-const toastMsg = document.getElementById("toastMsg");
-const toastSub = document.getElementById("toastSub");
-
-const contenedorAuthNav = document.getElementById("contenedorAuthNav");
-const formRegistro = document.getElementById("formRegistro");
-const formLogin = document.getElementById("formLogin");
-
-const modalDetalle = new bootstrap.Modal(document.getElementById("modalDetalle"));
-const modalCheckout = new bootstrap.Modal(document.getElementById("modalCheckout"));
-const modalAuth = new bootstrap.Modal(document.getElementById("modalAuth"));
-const modalPerfil = new bootstrap.Modal(document.getElementById("modalPerfil"));
-const offcanvasCarrito = new bootstrap.Offcanvas(document.getElementById("offcanvasCarrito"));
-
 function formatearPrecio(n) {
   return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(n);
 }
 
 function filtrarProductos() {
-  const q = inputBuscar.value.toLowerCase().trim();
-  const c = selectCategoria.value;
-  const maxP = parseInt(rangePrecio.value, 10);
+  const inputBuscar = document.getElementById("inputBuscar");
+  const selectCategoria = document.getElementById("selectCategoria");
+  const rangePrecio = document.getElementById("rangePrecio");
+
+  const q = inputBuscar ? inputBuscar.value.toLowerCase().trim() : "";
+  const c = selectCategoria ? selectCategoria.value : "todas";
+  const maxP = rangePrecio ? parseInt(rangePrecio.value, 10) : 2500000;
 
   return productos.filter(p => {
     const matchNom = p.nombre.toLowerCase().includes(q) || p.descripcion.toLowerCase().includes(q);
@@ -97,6 +71,10 @@ function filtrarProductos() {
 }
 
 function renderizarCatalogo() {
+  const grilla = document.getElementById("grillaProductos");
+  const contador = document.getElementById("contadorProductos");
+  if (!grilla) return;
+
   const filtrados = filtrarProductos();
   const totalPaginas = Math.ceil(filtrados.length / ITEMS_POR_PAGINA) || 1;
   if (paginaActual > totalPaginas) paginaActual = 1;
@@ -104,16 +82,17 @@ function renderizarCatalogo() {
   const inicio = (paginaActual - 1) * ITEMS_POR_PAGINA;
   const lote = filtrados.slice(inicio, inicio + ITEMS_POR_PAGINA);
 
-  contadorProductos.textContent = `Mostrando ${lote.length} de ${filtrados.length} productos (Página ${paginaActual} de ${totalPaginas})`;
+  if (contador) {
+    contador.textContent = `Mostrando ${lote.length} de ${filtrados.length} productos (Página ${paginaActual} de ${totalPaginas})`;
+  }
 
   if (lote.length === 0) {
-    grillaProductos.innerHTML = `<div class="col-12 py-5 text-center text-light">No hay existencias con esos parámetros.</div>`;
-    paginadorBotones.innerHTML = "";
-    paginadorInferior.innerHTML = "";
+    grilla.innerHTML = `<div class="col-12 py-5 text-center text-white">No hay existencias con esos parámetros.</div>`;
+    renderizarPaginadores(0);
     return;
   }
 
-  grillaProductos.innerHTML = lote.map(p => `
+  grilla.innerHTML = lote.map(p => `
     <div class="col">
       <div class="card card-shop h-100 shadow-sm">
         <div class="card-shop-img-wrapper">
@@ -132,7 +111,7 @@ function renderizarCatalogo() {
           <div class="mt-auto pt-2 border-top border-secondary d-flex justify-content-between align-items-center">
             <span class="fw-bold text-info">${formatearPrecio(p.precio)}</span>
             <div class="btn-group">
-              <button class="btn btn-sm btn-outline-secondary" onclick="verDetalle(${p.id})" title="Detalle"><i class="bi bi-eye"></i></button>
+              <button class="btn btn-sm btn-outline-secondary text-white" onclick="verDetalle(${p.id})" title="Detalle"><i class="bi bi-eye"></i></button>
               <button class="btn btn-sm btn-cyan" onclick="agregarAlCarritoRapido(${p.id})" title="Añadir"><i class="bi bi-cart-plus"></i></button>
               <button class="btn btn-sm btn-outline-danger" onclick="eliminarProducto(${p.id})" title="Eliminar"><i class="bi bi-trash"></i></button>
             </div>
@@ -146,13 +125,23 @@ function renderizarCatalogo() {
 }
 
 function renderizarPaginadores(total) {
+  const pSup = document.getElementById("paginadorBotones");
+  const pInf = document.getElementById("paginadorInferior");
+  if (!pSup && !pInf) return;
+
+  if (total <= 0) {
+    if (pSup) pSup.innerHTML = "";
+    if (pInf) pInf.innerHTML = "";
+    return;
+  }
+
   const html = `
-    <button class="btn btn-outline-secondary btn-sm" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(${paginaActual - 1})">Prev</button>
+    <button class="btn btn-outline-secondary btn-sm text-white" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(${paginaActual - 1})">Prev</button>
     <button class="btn btn-dark btn-sm text-info disabled border-secondary">${paginaActual} / ${total}</button>
-    <button class="btn btn-outline-secondary btn-sm" ${paginaActual === total ? 'disabled' : ''} onclick="cambiarPagina(${paginaActual + 1})">Sig</button>
+    <button class="btn btn-outline-secondary btn-sm text-white" ${paginaActual === total ? 'disabled' : ''} onclick="cambiarPagina(${paginaActual + 1})">Sig</button>
   `;
-  paginadorBotones.innerHTML = html;
-  paginadorInferior.innerHTML = html;
+  if (pSup) pSup.innerHTML = html;
+  if (pInf) pInf.innerHTML = html;
 }
 
 function cambiarPagina(nueva) {
@@ -161,15 +150,20 @@ function cambiarPagina(nueva) {
   window.scrollTo({ top: 180, behavior: 'smooth' });
 }
 
-// TOAST FLOTANTE INFERIOR
 function mostrarToastCarrito(nombreProd, cantidad) {
-  toastMsg.textContent = `${cantidad}x "${nombreProd}" agregado(s)`;
+  const toast = document.getElementById("cartToast");
+  const msg = document.getElementById("toastMsg");
+  const sub = document.getElementById("toastSub");
+  if (!toast) return;
+
+  if (msg) msg.textContent = `${cantidad}x "${nombreProd}" agregado(s)`;
   const totalItems = carrito.reduce((a, b) => a + b.cantidad, 0);
-  toastSub.textContent = `Carro activo: ${totalItems} ítem(s)`;
-  cartToast.style.display = "flex";
+  if (sub) sub.textContent = `Carro activo: ${totalItems} ítem(s)`;
+
+  toast.style.setProperty("display", "flex", "important");
   clearTimeout(window.toastTimer);
   window.toastTimer = setTimeout(() => {
-    cartToast.style.display = "none";
+    toast.style.setProperty("display", "none", "important");
   }, 4500);
 }
 
@@ -199,18 +193,26 @@ function eliminarDelCarrito(id, color) {
 }
 
 function actualizarCarrito() {
+  const lista = document.getElementById("listaCarrito");
+  const total = document.getElementById("totalCarrito");
+  const badge = document.getElementById("badgeCarrito");
+  const checkMonto = document.getElementById("checkoutTotalMonto");
+
   const totalItems = carrito.reduce((a, b) => a + b.cantidad, 0);
   const monto = carrito.reduce((a, b) => a + (b.precio * b.cantidad), 0);
-  badgeCarrito.textContent = totalItems;
-  totalCarrito.textContent = formatearPrecio(monto);
-  document.getElementById("checkoutTotalMonto").textContent = formatearPrecio(monto);
+
+  if (badge) badge.textContent = totalItems;
+  if (total) total.textContent = formatearPrecio(monto);
+  if (checkMonto) checkMonto.textContent = formatearPrecio(monto);
+
+  if (!lista) return;
 
   if (carrito.length === 0) {
-    listaCarrito.innerHTML = `<p class="text-center text-muted-custom my-4">No hay ítems en la orden.</p>`;
+    lista.innerHTML = `<p class="text-center text-muted-custom my-4">No hay ítems en la orden.</p>`;
     return;
   }
 
-  listaCarrito.innerHTML = carrito.map(item => `
+  lista.innerHTML = carrito.map(item => `
     <div class="d-flex justify-content-between align-items-center p-2 mb-2 bg-dark rounded border border-secondary">
       <div>
         <div class="small fw-bold text-white text-truncate" style="max-width: 170px;">${item.nombre}</div>
@@ -226,7 +228,8 @@ function actualizarCarrito() {
 function toggleFavorito(id) {
   if (favoritos.has(id)) favoritos.delete(id);
   else favoritos.add(id);
-  badgeFavoritos.textContent = favoritos.size;
+  const badge = document.getElementById("badgeFavoritos");
+  if (badge) badge.textContent = favoritos.size;
   renderizarCatalogo();
 }
 
@@ -235,13 +238,13 @@ function eliminarProducto(id) {
     productos = productos.filter(p => p.id !== id);
     carrito = carrito.filter(x => x.id !== id);
     favoritos.delete(id);
-    badgeFavoritos.textContent = favoritos.size;
+    const badge = document.getElementById("badgeFavoritos");
+    if (badge) badge.textContent = favoritos.size;
     actualizarCarrito();
     renderizarCatalogo();
   }
 }
 
-// MODAL DETALLE CON RESEÑAS REALISTAS
 function verDetalle(id) {
   const prod = productos.find(p => p.id === id);
   if (!prod) return;
@@ -269,80 +272,27 @@ function verDetalle(id) {
   `).join("");
   document.getElementById("contenedorReseñas").innerHTML = reseñasHtml;
 
-  modalDetalle.show();
+  const modalEl = document.getElementById("modalDetalle");
+  if (modalEl) bootstrap.Modal.getOrCreateInstance(modalEl).show();
 }
 
-document.getElementById("btnModalAddCart").addEventListener("click", () => {
-  if (!prodSeleccionado) return;
-  const cant = parseInt(document.getElementById("modalSelectCantidad").value, 10);
-  const color = document.getElementById("modalSelectColor").value;
-  agregarAlCarritoCompleto(prodSeleccionado.id, cant, color);
-  modalDetalle.hide();
-});
-
-document.getElementById("btnModalBuyNow").addEventListener("click", () => {
-  if (!prodSeleccionado) return;
-  const cant = parseInt(document.getElementById("modalSelectCantidad").value, 10);
-  const color = document.getElementById("modalSelectColor").value;
-  agregarAlCarritoCompleto(prodSeleccionado.id, cant, color);
-  modalDetalle.hide();
-  modalCheckout.show();
-});
-
-// CHECKOUT FORMULARIO
-document.getElementById("formCheckout").addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (carrito.length === 0) return alert("El carrito está vacío.");
-
-  const trackCode = "TRK-" + Math.floor(100000 + Math.random() * 900000);
-  modalCheckout.hide();
-  
-  alert(`¡PAGO PROCESADO EXITOSAMENTE!\n\nSe ha emitido tu comprobante digital y se envió el detalle a tu correo asociado.\nCódigo de Seguimiento: ${trackCode}\nProveedor: MasterTech SpA / Campus UNAB`);
-
-  carrito = [];
-  actualizarCarrito();
-});
-
-// MODAL PUBLICAR
-document.getElementById("formNuevoProducto").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const f = e.target;
-  if (!f.checkValidity()) {
-    e.stopPropagation();
-    f.classList.add("was-validated");
-    return;
-  }
-
-  const nuevo = {
-    id: Date.now(),
-    nombre: document.getElementById("formNombre").value.trim(),
-    categoria: document.getElementById("formCategoria").value,
-    precio: parseInt(document.getElementById("formPrecio").value, 10),
-    imagen: document.getElementById("formImg").value.trim() || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80",
-    descripcion: document.getElementById("formDesc").value.trim(),
-    vendedor: document.getElementById("formVendedor").value.trim(),
-    contacto: "contacto@mastertechg.com"
-  };
-
-  productos.unshift(nuevo);
-  f.reset();
-  f.classList.remove("was-validated");
-  bootstrap.Modal.getInstance(document.getElementById("modalNuevoProducto")).hide();
-  paginaActual = 1;
-  renderizarCatalogo();
-});
-
-// AUTENTICACIÓN LOCALSTORAGE
+// AUTENTICACIÓN
 function obtenerUsuarioActivo() {
-  const u = localStorage.getItem("nexustech_user");
-  return u ? JSON.parse(u) : null;
+  try {
+    const u = localStorage.getItem("nexustech_user");
+    return u ? JSON.parse(u) : null;
+  } catch (e) {
+    return null;
+  }
 }
 
 function actualizarEstadoAuth() {
+  const c = document.getElementById("contenedorAuthNav");
+  if (!c) return;
   const user = obtenerUsuarioActivo();
   if (user) {
     const inicial = user.usuario.charAt(0).toUpperCase();
-    contenedorAuthNav.innerHTML = `
+    c.innerHTML = `
       <div class="d-flex align-items-center gap-2" onclick="abrirPerfil()" style="cursor: pointer;">
         <div class="rounded-circle bg-info text-dark d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 34px; height: 34px;">
           ${inicial}
@@ -351,7 +301,7 @@ function actualizarEstadoAuth() {
       </div>
     `;
   } else {
-    contenedorAuthNav.innerHTML = `
+    c.innerHTML = `
       <button class="btn btn-sm btn-outline-light d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalAuth">
         <i class="bi bi-person-circle"></i> <span>Ingresar</span>
       </button>
@@ -362,72 +312,163 @@ function actualizarEstadoAuth() {
 function abrirPerfil() {
   const user = obtenerUsuarioActivo();
   if (!user) return;
-  document.getElementById("perfilAvatarCirculo").textContent = user.usuario.charAt(0).toUpperCase();
-  document.getElementById("perfilNombreUsuario").textContent = user.usuario;
-  document.getElementById("perfilEmail").textContent = user.email;
-  modalPerfil.show();
+  const av = document.getElementById("perfilAvatarCirculo");
+  const nom = document.getElementById("perfilNombreUsuario");
+  const em = document.getElementById("perfilEmail");
+  if (av) av.textContent = user.usuario.charAt(0).toUpperCase();
+  if (nom) nom.textContent = user.usuario;
+  if (em) em.textContent = user.email || `${user.usuario}@nexusmail.cl`;
+  const m = document.getElementById("modalPerfil");
+  if (m) bootstrap.Modal.getOrCreateInstance(m).show();
 }
 
-formRegistro.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (!formRegistro.checkValidity()) {
-    e.stopPropagation();
-    formRegistro.classList.add("was-validated");
-    return;
-  }
-  const usuario = document.getElementById("regUsuario").value.trim();
-  const email = document.getElementById("regEmail").value.trim();
-  const password = document.getElementById("regPassword").value;
-
-  const nuevoUsuario = { usuario, email, password };
-  localStorage.setItem("nexustech_user", JSON.stringify(nuevoUsuario));
-  formRegistro.reset();
-  formRegistro.classList.remove("was-validated");
-  modalAuth.hide();
-  actualizarEstadoAuth();
-  mostrarToastCarrito(`¡Bienvenido, ${usuario}! Cuenta creada e iniciada.`, 1);
-});
-
-formLogin.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const usuario = document.getElementById("loginUsuario").value.trim();
-  if (!usuario) return alert("Por favor ingresa tu usuario.");
-
-  const usuarioGuardado = obtenerUsuarioActivo() || { usuario, email: `${usuario}@nexusmail.cl` };
-  usuarioGuardado.usuario = usuario;
-  localStorage.setItem("nexustech_user", JSON.stringify(usuarioGuardado));
-  formLogin.reset();
-  modalAuth.hide();
-  actualizarEstadoAuth();
-  mostrarToastCarrito(`Sesión iniciada como ${usuario}.`, 1);
-});
-
-document.getElementById("btnCerrarSesion").addEventListener("click", () => {
-  localStorage.removeItem("nexustech_user");
-  modalPerfil.hide();
-  actualizarEstadoAuth();
-  mostrarToastCarrito("Has cerrado sesión correctamente.", 0);
-});
-
-// FILTROS
-inputBuscar.addEventListener("input", () => { paginaActual = 1; renderizarCatalogo(); });
-selectCategoria.addEventListener("change", () => { paginaActual = 1; renderizarCatalogo(); });
-rangePrecio.addEventListener("input", (e) => {
-  labelPrecioMax.textContent = formatearPrecio(e.target.value);
-  paginaActual = 1;
-  renderizarCatalogo();
-});
-btnLimpiarFiltros.addEventListener("click", () => {
-  inputBuscar.value = "";
-  selectCategoria.value = "todas";
-  rangePrecio.value = 2500000;
-  labelPrecioMax.textContent = formatearPrecio(2500000);
-  paginaActual = 1;
-  renderizarCatalogo();
-});
-
+// INICIALIZACIÓN DE EVENTOS SEGUROS
 document.addEventListener("DOMContentLoaded", () => {
   renderizarCatalogo();
   actualizarCarrito();
   actualizarEstadoAuth();
+
+  // Búsqueda y Filtros
+  const inpB = document.getElementById("inputBuscar");
+  const selC = document.getElementById("selectCategoria");
+  const rngP = document.getElementById("rangePrecio");
+  const btnL = document.getElementById("btnLimpiarFiltros");
+
+  if (inpB) inpB.addEventListener("input", () => { paginaActual = 1; renderizarCatalogo(); });
+  if (selC) selC.addEventListener("change", () => { paginaActual = 1; renderizarCatalogo(); });
+  if (rngP) rngP.addEventListener("input", (e) => {
+    const lbl = document.getElementById("labelPrecioMax");
+    if (lbl) lbl.textContent = formatearPrecio(e.target.value);
+    paginaActual = 1;
+    renderizarCatalogo();
+  });
+  if (btnL) btnL.addEventListener("click", () => {
+    if (inpB) inpB.value = "";
+    if (selC) selC.value = "todas";
+    if (rngP) rngP.value = 2500000;
+    const lbl = document.getElementById("labelPrecioMax");
+    if (lbl) lbl.textContent = formatearPrecio(2500000);
+    paginaActual = 1;
+    renderizarCatalogo();
+  });
+
+  // Modal Detalle Botones
+  const btnAdd = document.getElementById("btnModalAddCart");
+  const btnBuy = document.getElementById("btnModalBuyNow");
+  if (btnAdd) {
+    btnAdd.addEventListener("click", () => {
+      if (!prodSeleccionado) return;
+      const cant = parseInt(document.getElementById("modalSelectCantidad")?.value || "1", 10);
+      const color = document.getElementById("modalSelectColor")?.value || "Gris Espacial";
+      agregarAlCarritoCompleto(prodSeleccionado.id, cant, color);
+      const m = document.getElementById("modalDetalle");
+      if (m) bootstrap.Modal.getInstance(m)?.hide();
+    });
+  }
+  if (btnBuy) {
+    btnBuy.addEventListener("click", () => {
+      if (!prodSeleccionado) return;
+      const cant = parseInt(document.getElementById("modalSelectCantidad")?.value || "1", 10);
+      const color = document.getElementById("modalSelectColor")?.value || "Gris Espacial";
+      agregarAlCarritoCompleto(prodSeleccionado.id, cant, color);
+      const m = document.getElementById("modalDetalle");
+      if (m) bootstrap.Modal.getInstance(m)?.hide();
+      const mCheck = document.getElementById("modalCheckout");
+      if (mCheck) bootstrap.Modal.getOrCreateInstance(mCheck).show();
+    });
+  }
+
+  // Checkout
+  const fCheck = document.getElementById("formCheckout");
+  if (fCheck) {
+    fCheck.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (carrito.length === 0) return alert("El carrito está vacío.");
+      const trackCode = "TRK-" + Math.floor(100000 + Math.random() * 900000);
+      const mCheck = document.getElementById("modalCheckout");
+      if (mCheck) bootstrap.Modal.getInstance(mCheck)?.hide();
+      alert(`¡PAGO PROCESADO EXITOSAMENTE!\n\nSe envió la confirmación a tu correo.\nCódigo de Envío: ${trackCode}\nProveedor: MasterTech SpA`);
+      carrito = [];
+      actualizarCarrito();
+    });
+  }
+
+  // Publicar Producto
+  const fPub = document.getElementById("formNuevoProducto");
+  if (fPub) {
+    fPub.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!fPub.checkValidity()) {
+        e.stopPropagation();
+        fPub.classList.add("was-validated");
+        return;
+      }
+      const nuevo = {
+        id: Date.now(),
+        nombre: document.getElementById("formNombre").value.trim(),
+        categoria: document.getElementById("formCategoria").value,
+        precio: parseInt(document.getElementById("formPrecio").value, 10),
+        imagen: document.getElementById("formImg")?.value.trim() || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80",
+        descripcion: document.getElementById("formDesc").value.trim(),
+        vendedor: document.getElementById("formVendedor").value.trim(),
+        contacto: "contacto@mastertechg.com"
+      };
+      productos.unshift(nuevo);
+      fPub.reset();
+      fPub.classList.remove("was-validated");
+      const mPub = document.getElementById("modalNuevoProducto");
+      if (mPub) bootstrap.Modal.getInstance(mPub)?.hide();
+      paginaActual = 1;
+      renderizarCatalogo();
+    });
+  }
+
+  // Registro y Login
+  const fReg = document.getElementById("formRegistro");
+  if (fReg) {
+    fReg.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!fReg.checkValidity()) {
+        e.stopPropagation();
+        fReg.classList.add("was-validated");
+        return;
+      }
+      const usuario = document.getElementById("regUsuario").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value;
+      localStorage.setItem("nexustech_user", JSON.stringify({ usuario, email, password }));
+      fReg.reset();
+      fReg.classList.remove("was-validated");
+      const mAuth = document.getElementById("modalAuth");
+      if (mAuth) bootstrap.Modal.getInstance(mAuth)?.hide();
+      actualizarEstadoAuth();
+      mostrarToastCarrito(`¡Bienvenido, ${usuario}!`, 1);
+    });
+  }
+
+  const fLog = document.getElementById("formLogin");
+  if (fLog) {
+    fLog.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const u = document.getElementById("loginUsuario")?.value.trim();
+      if (!u) return alert("Ingresa tu usuario.");
+      localStorage.setItem("nexustech_user", JSON.stringify({ usuario: u, email: `${u}@nexusmail.cl` }));
+      fLog.reset();
+      const mAuth = document.getElementById("modalAuth");
+      if (mAuth) bootstrap.Modal.getInstance(mAuth)?.hide();
+      actualizarEstadoAuth();
+      mostrarToastCarrito(`Sesión iniciada: ${u}`, 1);
+    });
+  }
+
+  const btnLogout = document.getElementById("btnCerrarSesion");
+  if (btnLogout) {
+    btnLogout.addEventListener("click", () => {
+      localStorage.removeItem("nexustech_user");
+      const mPerf = document.getElementById("modalPerfil");
+      if (mPerf) bootstrap.Modal.getInstance(mPerf)?.hide();
+      actualizarEstadoAuth();
+      mostrarToastCarrito("Sesión cerrada.", 0);
+    });
+  }
 });
