@@ -1,436 +1,294 @@
-// Base de datos y estado reactivo
-const DB_INICIAL = {
-    mascotas: [
-        { id: 1, nombre: "Firulais", especie: "Perro", edad: 5, estado: "Activo", tutor: "Juan Pérez", telefono: "+56 9 1234 5678" },
-        { id: 2, nombre: "Michi", especie: "Gato", edad: 3, estado: "Activo", tutor: "María Silva", telefono: "+56 9 8765 4321" },
-        { id: 3, nombre: "Rocky", especie: "Perro", edad: 8, estado: "En tratamiento", tutor: "Carlos Soto", telefono: "+56 9 1122 3344" },
-        { id: 4, nombre: "Luna", especie: "Otro", edad: 2, estado: "Activo", tutor: "Ana Muñoz", telefono: "+56 9 5566 7788" }
-    ],
-    consultas: [
-        { id: 1, mascota: "Firulais", fecha: "2026-08-20", motivo: "Control general y desparasitación", veterinario: "Dra. González", estado: "Confirmada" },
-        { id: 2, mascota: "Rocky", fecha: "2026-08-22", motivo: "Revisión postoperatoria", veterinario: "Dr. Martínez", estado: "Pendiente" }
-    ],
-    vacunas: [
-        { id: 1, mascota: "Firulais", vacuna: "Antirrábica", fechaAplicacion: "2026-01-15", proximaDosis: "2027-01-15", estado: "Al día" },
-        { id: 2, mascota: "Michi", vacuna: "Triple Felina", fechaAplicacion: "2026-03-10", proximaDosis: "2027-03-10", estado: "Al día" },
-        { id: 3, mascota: "Rocky", vacuna: "Séxtuple", fechaAplicacion: "2025-06-01", proximaDosis: "2026-06-01", estado: "Vencida" }
-    ]
-};
+// ==========================================
+// 1. BANCO DE DATOS BASE Y GENERADOR DE 1200 PRODUCTOS
+// ==========================================
+const TECH_POOL = [
+  { n: "MacBook Pro M3 Max 36GB", c: "Workstations", p: 1890000, img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", v: "NexusTech Hub" },
+  { n: "ThinkPad P1 Gen 6 RTX 4080", c: "Workstations", p: 1650000, img: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80", v: "Valpo Tech Supply" },
+  { n: "Dell Precision 5680 i9 64GB", c: "Workstations", p: 1780000, img: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&q=80", v: "NexusTech Hub" },
+  { n: "GPU Nvidia RTX 4090 24GB OC", c: "Hardware", p: 1450000, img: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500&q=80", v: "MasterTech SpA" },
+  { n: "Procesador Ryzen 9 7950X 16C", c: "Hardware", p: 480000, img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=500&q=80", v: "Silicon Reñaca" },
+  { n: "SSD NVMe M.2 4TB Gen4 7400MB/s", c: "Hardware", p: 260000, img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80", v: "Hardware Outlet" },
+  { n: "Monitor OLED 34' Ultrawide 175Hz", c: "Periféricos", p: 720000, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80", v: "NexusTech Hub" },
+  { n: "Teclado Mecánico Custom PCB Lubed", c: "Periféricos", p: 115000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80", v: "Gran Royal Peripherals" },
+  { n: "Mouse Inalámbrico 4K Polling Rate", c: "Periféricos", p: 65000, img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80", v: "Accesorios Viña" },
+  { n: "Audífonos Reference DAC Studio", c: "Periféricos", p: 145000, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", v: "AudioTech Labs" },
+  { n: "Integración Pasarela Webpay / API", c: "Soluciones", p: 100000, img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80", v: "MasterTech SpA" },
+  { n: "Landing Page Conversión y SEO Local", c: "Soluciones", p: 40000, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80", v: "MasterTech SpA" },
+  { n: "Servidor Rack 1U Xeon 64GB ECC", c: "Hardware", p: 980000, img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80", v: "Enterprise Systems" },
+  { n: "Switch Gestionable 24 Puertos PoE", c: "Hardware", p: 210000, img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500&q=80", v: "Enterprise Systems" },
+  { n: "Kit Memoria RAM DDR5 64GB RGB", c: "Hardware", p: 175000, img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=500&q=80", v: "Silicon Reñaca" }
+];
 
-// Acceso a datos
-function getStorage(key, fallback) {
-    const data = localStorage.getItem(key);
-    if (!data) {
-        localStorage.setItem(key, JSON.stringify(fallback));
-        return fallback;
-    }
-    return JSON.parse(data);
+// Generamos 1200 ítems procedurales
+let productos = [];
+for (let i = 1; i <= 1200; i++) {
+  const base = TECH_POOL[(i - 1) % TECH_POOL.length];
+  const delta = (i * 37) % 50000;
+  productos.push({
+    id: i,
+    nombre: `${base.n} (SKU #${10000 + i})`,
+    categoria: base.c,
+    precio: base.p + delta,
+    imagen: base.img,
+    descripcion: `Ítem verificado bajo protocolo de control. Garantía de funcionamiento y soporte de integración incluido.`,
+    vendedor: base.v,
+    contacto: "contacto@mastertechg.com"
+  });
 }
 
-function getMascotas() { return getStorage("vet_mascotas", DB_INICIAL.mascotas); }
-function setMascotas(data) { localStorage.setItem("vet_mascotas", JSON.stringify(data)); }
+// Control de paginación
+let paginaActual = 1;
+const ITEMS_POR_PAGINA = 24;
 
-function getConsultas() { return getStorage("vet_consultas", DB_INICIAL.consultas); }
-function setConsultas(data) { localStorage.setItem("vet_consultas", JSON.stringify(data)); }
+let carrito = [];
+let favoritos = new Set();
+let prodSeleccionado = null;
 
-function getVacunas() { return getStorage("vet_vacunas", DB_INICIAL.vacunas); }
-function setVacunas(data) { localStorage.setItem("vet_vacunas", JSON.stringify(data)); }
+// DOM
+const grillaProductos = document.getElementById("grillaProductos");
+const contadorProductos = document.getElementById("contadorProductos");
+const inputBuscar = document.getElementById("inputBuscar");
+const selectCategoria = document.getElementById("selectCategoria");
+const rangePrecio = document.getElementById("rangePrecio");
+const labelPrecioMax = document.getElementById("labelPrecioMax");
+const btnLimpiarFiltros = document.getElementById("btnLimpiarFiltros");
+const listaCarrito = document.getElementById("listaCarrito");
+const totalCarrito = document.getElementById("totalCarrito");
+const badgeCarrito = document.getElementById("badgeCarrito");
+const badgeFavoritos = document.getElementById("badgeFavoritos");
+const paginadorBotones = document.getElementById("paginadorBotones");
+const paginadorInferior = document.getElementById("paginadorInferior");
+const contenedorAlertas = document.getElementById("contenedorAlertas");
+const formNuevoProducto = document.getElementById("formNuevoProducto");
 
-// Sistema de Notificaciones Toast de Bootstrap
-function mostrarToast(titulo, mensaje, tipo = "primary") {
-    const contenedor = document.getElementById("toastContainer");
-    if (!contenedor) return;
+const modalDetalle = new bootstrap.Modal(document.getElementById("modalDetalle"));
 
-    const toastId = "toast_" + Date.now();
-    const bgClass = tipo === "danger" ? "bg-danger text-white" : tipo === "success" ? "bg-success text-white" : "bg-primary text-white";
+function formatearPrecio(n) {
+  return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(n);
+}
 
-    const toastHtml = `
-        <div id="${toastId}" class="toast align-items-center ${bgClass} border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <strong>${titulo}:</strong> ${mensaje}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
+function filtrarProductos() {
+  const q = inputBuscar.value.toLowerCase().trim();
+  const c = selectCategoria.value;
+  const maxP = parseInt(rangePrecio.value, 10);
+
+  return productos.filter(p => {
+    const matchNom = p.nombre.toLowerCase().includes(q) || p.descripcion.toLowerCase().includes(q);
+    const matchCat = (c === "todas") || (p.categoria === c);
+    const matchP = p.precio <= maxP;
+    return matchNom && matchCat && matchP;
+  });
+}
+
+function renderizarCatalogo() {
+  const filtrados = filtrarProductos();
+  const totalPaginas = Math.ceil(filtrados.length / ITEMS_POR_PAGINA) || 1;
+  if (paginaActual > totalPaginas) paginaActual = 1;
+
+  const inicio = (paginaActual - 1) * ITEMS_POR_PAGINA;
+  const lote = filtrados.slice(inicio, inicio + ITEMS_POR_PAGINA);
+
+  contadorProductos.textContent = `Mostrando ${lote.length} de ${filtrados.length} productos (Pág. ${paginaActual}/${totalPaginas})`;
+
+  if (lote.length === 0) {
+    grillaProductos.innerHTML = `<div class="col-12 py-5 text-center text-muted">No hay hardware disponible con esos parámetros.</div>`;
+    paginadorBotones.innerHTML = "";
+    paginadorInferior.innerHTML = "";
+    return;
+  }
+
+  grillaProductos.innerHTML = lote.map(p => `
+    <div class="col">
+      <div class="card card-shop h-100 shadow-sm">
+        <div class="card-shop-img-wrapper">
+          <img src="${p.imagen}" class="card-shop-img" alt="${p.nombre}" loading="lazy">
+          <span class="position-absolute top-0 start-0 m-2 badge badge-stock">DISPONIBLE</span>
         </div>
-    `;
-    contenedor.insertAdjacentHTML("beforeend", toastHtml);
-    const toastElement = document.getElementById(toastId);
-    const toast = new bootstrap.Toast(toastElement, { delay: 3500 });
-    toast.show();
-    toastElement.addEventListener("hidden.bs.toast", () => toastElement.remove());
-}
-
-// Modo Oscuro / Claro
-function setupThemeToggle() {
-    const btn = document.getElementById("btnThemeToggle");
-    const currentTheme = localStorage.getItem("vet_theme") || "light";
-    document.documentElement.setAttribute("data-bs-theme", currentTheme);
-    if (btn) btn.textContent = currentTheme === "dark" ? "☀️ Modo Claro" : "🌙 Modo Oscuro";
-
-    if (btn) {
-        btn.addEventListener("click", () => {
-            const nextTheme = document.documentElement.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
-            document.documentElement.setAttribute("data-bs-theme", nextTheme);
-            localStorage.setItem("vet_theme", nextTheme);
-            btn.textContent = nextTheme === "dark" ? "☀️ Modo Claro" : "🌙 Modo Oscuro";
-        });
-    }
-}
-
-// Manejo de Sesión de Usuario
-function setupAuthStatus() {
-    const user = sessionStorage.getItem("vet_user");
-    const container = document.getElementById("navAuthContainer");
-    if (!container) return;
-
-    if (user) {
-        container.innerHTML = `
-            <div class="dropdown">
-                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    👤 ${user}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow">
-                    <li><h6 class="dropdown-header">Usuario Conectado</h6></li>
-                    <li><a class="dropdown-item" href="#" onclick="logoutUser()">Cerrar Sesión</a></li>
-                </ul>
+        <div class="card-body d-flex flex-column p-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="badge bg-dark border border-secondary text-info small">${p.categoria}</span>
+            <button class="btn btn-sm p-0 border-0 ${favoritos.has(p.id) ? 'text-danger' : 'text-muted'}" onclick="toggleFavorito(${p.id})">
+              <i class="bi ${favoritos.has(p.id) ? 'bi-heart-fill' : 'bi-heart'}"></i>
+            </button>
+          </div>
+          <h6 class="card-title fw-bold text-truncate text-light mb-1" style="cursor: pointer;" onclick="verDetalle(${p.id})">${p.nombre}</h6>
+          <p class="small text-muted mb-2 text-truncate">${p.vendedor}</p>
+          <div class="mt-auto pt-2 border-top border-secondary d-flex justify-content-between align-items-center">
+            <span class="fw-bold text-info">${formatearPrecio(p.precio)}</span>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-outline-secondary" onclick="verDetalle(${p.id})" title="Detalle"><i class="bi bi-eye"></i></button>
+              <button class="btn btn-sm btn-cyan" onclick="agregarAlCarrito(${p.id})" title="Añadir"><i class="bi bi-cart-plus"></i></button>
+              <button class="btn btn-sm btn-outline-danger" onclick="eliminarProducto(${p.id})" title="Eliminar"><i class="bi bi-trash"></i></button>
             </div>
-        `;
-    } else {
-        container.innerHTML = `<a class="btn btn-sm btn-unab-primary px-3 w-100" href="login.html">Iniciar Sesión</a>`;
-    }
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+  renderizarPaginadores(totalPaginas);
 }
 
-function logoutUser() {
-    sessionStorage.removeItem("vet_user");
-    mostrarToast("Sesión", "Has cerrado tu sesión correctamente.", "primary");
-    setTimeout(() => window.location.reload(), 800);
+function renderizarPaginadores(total) {
+  const html = `
+    <button class="btn btn-outline-secondary btn-sm" ${paginaActual === 1 ? 'disabled' : ''} onclick="cambiarPagina(${paginaActual - 1})">Prev</button>
+    <button class="btn btn-dark btn-sm text-info disabled border-secondary">${paginaActual} / ${total}</button>
+    <button class="btn btn-outline-secondary btn-sm" ${paginaActual === total ? 'disabled' : ''} onclick="cambiarPagina(${paginaActual + 1})">Sig</button>
+  `;
+  paginadorBotones.innerHTML = html;
+  paginadorInferior.innerHTML = html;
 }
 
-// Estadísticas Dashboard en Inicio
-function renderizarDashboard() {
-    const statMascotas = document.getElementById("statTotalMascotas");
-    const statConsultas = document.getElementById("statTotalConsultas");
-    const statVacunas = document.getElementById("statTotalVacunas");
-    const statActivos = document.getElementById("statTasaActivos");
-
-    const mascotas = getMascotas();
-    const consultas = getConsultas();
-    const vacunas = getVacunas();
-
-    if (statMascotas) statMascotas.textContent = mascotas.length;
-    if (statConsultas) statConsultas.textContent = consultas.length;
-    if (statVacunas) statVacunas.textContent = vacunas.length;
-    if (statActivos) {
-        const activas = mascotas.filter(m => m.estado === "Activo").length;
-        const pct = mascotas.length > 0 ? Math.round((activas / mascotas.length) * 100) : 0;
-        statActivos.textContent = `${pct}%`;
-    }
-
-    const contadorNav = document.getElementById("contadorMascotas");
-    if (contadorNav) contadorNav.textContent = mascotas.length;
+function cambiarPagina(nueva) {
+  paginaActual = nueva;
+  renderizarCatalogo();
+  window.scrollTo({ top: 180, behavior: 'smooth' });
 }
 
-// Renderizado y Gestión de Mascotas
-function renderizarTablaMascotas() {
-    const tbody = document.getElementById("tablaMascotasBody");
-    if (!tbody) return;
-
-    const query = document.getElementById("inputBuscar") ? document.getElementById("inputBuscar").value.toLowerCase() : "";
-    const filtroEspecie = document.getElementById("filtroEspecie") ? document.getElementById("filtroEspecie").value : "Todos";
-
-    let datos = getMascotas();
-
-    if (filtroEspecie !== "Todos") {
-        datos = datos.filter(m => m.especie === filtroEspecie);
-    }
-
-    if (query.trim() !== "") {
-        datos = datos.filter(m => 
-            m.nombre.toLowerCase().includes(query) || 
-            m.especie.toLowerCase().includes(query) || 
-            (m.tutor && m.tutor.toLowerCase().includes(query))
-        );
-    }
-
-    tbody.innerHTML = "";
-
-    if (datos.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No se encontraron mascotas en los registros.</td></tr>`;
-        return;
-    }
-
-    datos.forEach(m => {
-        const badgeColor = m.estado === "Activo" ? "bg-success" : "bg-warning text-dark";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="fw-bold text-primary">${m.nombre}</td>
-            <td>${m.especie}</td>
-            <td>${m.edad} año(s)</td>
-            <td>${m.tutor || 'No asignado'} <small class="d-block text-muted">${m.telefono || ''}</small></td>
-            <td><span class="badge ${badgeColor}">${m.estado}</span></td>
-            <td class="text-end">
-                <button class="btn btn-sm btn-outline-danger" onclick="eliminarMascota(${m.id})">Eliminar</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-
-    renderizarDashboard();
+function agregarAlCarrito(id) {
+  const p = productos.find(x => x.id === id);
+  if (!p) return;
+  const item = carrito.find(x => x.id === id);
+  if (item) item.cantidad++;
+  else carrito.push({ ...p, cantidad: 1 });
+  actualizarCarrito();
+  mostrarAlerta(`"${p.nombre}" añadido a tu orden.`, "info");
 }
 
-function eliminarMascota(id) {
-    const lista = getMascotas().filter(m => m.id !== id);
-    setMascotas(lista);
-    renderizarTablaMascotas();
-    mostrarToast("Eliminado", "La mascota ha sido removida del registro.", "danger");
+function eliminarDelCarrito(id) {
+  carrito = carrito.filter(x => x.id !== id);
+  actualizarCarrito();
 }
 
-// Exportar Datos a JSON
-function exportarMascotasJSON() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getMascotas(), null, 2));
-    const a = document.createElement("a");
-    a.setAttribute("href", dataStr);
-    a.setAttribute("download", "mascotas_vetconnect.json");
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    mostrarToast("Exportación", "Archivo JSON generado exitosamente.", "success");
+function actualizarCarrito() {
+  const totalItems = carrito.reduce((a, b) => a + b.cantidad, 0);
+  const monto = carrito.reduce((a, b) => a + (b.precio * b.cantidad), 0);
+  badgeCarrito.textContent = totalItems;
+  totalCarrito.textContent = formatearPrecio(monto);
+
+  if (carrito.length === 0) {
+    listaCarrito.innerHTML = `<p class="text-center text-muted my-4">No hay ítems en la orden.</p>`;
+    return;
+  }
+
+  listaCarrito.innerHTML = carrito.map(item => `
+    <div class="d-flex justify-content-between align-items-center p-2 mb-2 bg-dark rounded border border-secondary">
+      <div>
+        <div class="small fw-bold text-light text-truncate" style="max-width: 170px;">${item.nombre}</div>
+        <span class="small text-info">${item.cantidad} x ${formatearPrecio(item.precio)}</span>
+      </div>
+      <button class="btn btn-sm text-danger border-0" onclick="eliminarDelCarrito(${item.id})">
+        <i class="bi bi-x-circle-fill"></i>
+      </button>
+    </div>
+  `).join("");
 }
 
-// Exportar Datos a CSV (Excel)
-function exportarMascotasCSV() {
-    const data = getMascotas();
-    let csv = "ID,Nombre,Especie,Edad,Tutor,Telefono,Estado\n";
-    data.forEach(m => {
-        csv += `"${m.id}","${m.nombre}","${m.especie}","${m.edad}","${m.tutor || ''}","${m.telefono || ''}","${m.estado}"\n`;
-    });
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "mascotas_vetconnect.csv");
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    mostrarToast("Exportación", "Archivo CSV descargado con éxito.", "success");
+function toggleFavorito(id) {
+  if (favoritos.has(id)) favoritos.delete(id);
+  else favoritos.add(id);
+  badgeFavoritos.textContent = favoritos.size;
+  renderizarCatalogo();
 }
 
-// Renderizar Consultas
-function renderizarTablaConsultas() {
-    const tbody = document.getElementById("tablaConsultasBody");
-    if (!tbody) return;
-
-    const datos = getConsultas();
-    tbody.innerHTML = "";
-
-    if (datos.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-muted">No hay consultas agendadas.</td></tr>`;
-        return;
-    }
-
-    datos.forEach(c => {
-        const badgeClass = c.estado === "Confirmada" ? "bg-success" : "bg-secondary";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="fw-bold">${c.mascota}</td>
-            <td>${c.fecha}</td>
-            <td>${c.motivo}</td>
-            <td>${c.veterinario}</td>
-            <td><span class="badge ${badgeClass}">${c.estado}</span></td>
-        `;
-        tbody.appendChild(tr);
-    });
+function eliminarProducto(id) {
+  if (confirm("¿Confirmas la remoción técnica de esta publicación?")) {
+    productos = productos.filter(p => p.id !== id);
+    eliminarDelCarrito(id);
+    favoritos.delete(id);
+    badgeFavoritos.textContent = favoritos.size;
+    renderizarCatalogo();
+    mostrarAlerta("Publicación dada de baja.", "warning");
+  }
 }
 
-// Renderizar Vacunas
-function renderizarTablaVacunas() {
-    const tbody = document.getElementById("tablaVacunasBody");
-    if (!tbody) return;
+function verDetalle(id) {
+  const prod = productos.find(p => p.id === id);
+  if (!prod) return;
+  prodSeleccionado = prod;
 
-    const datos = getVacunas();
-    tbody.innerHTML = "";
+  document.getElementById("modalDetalleTitulo").textContent = prod.nombre;
+  document.getElementById("modalDetalleImg").src = prod.imagen;
+  document.getElementById("modalDetalleDesc").textContent = prod.descripcion;
+  document.getElementById("modalDetalleCat").textContent = prod.categoria;
+  document.getElementById("modalDetallePrecio").textContent = formatearPrecio(prod.precio);
+  document.getElementById("modalDetalleVendedor").textContent = prod.vendedor;
+  document.getElementById("modalDetalleContacto").textContent = `Contacto: ${prod.contacto}`;
 
-    if (datos.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-muted">No hay vacunas registradas.</td></tr>`;
-        return;
-    }
-
-    datos.forEach(v => {
-        const badgeClass = v.estado === "Al día" ? "bg-success" : "bg-danger";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td class="fw-bold">${v.mascota}</td>
-            <td>${v.vacuna}</td>
-            <td>${v.fechaAplicacion}</td>
-            <td>${v.proximaDosis}</td>
-            <td><span class="badge ${badgeClass}">${v.estado}</span></td>
-        `;
-        tbody.appendChild(tr);
-    });
+  modalDetalle.show();
 }
 
-// Inicialización de Listeners y Formularios
+document.getElementById("btnModalAddCart").addEventListener("click", () => {
+  if (prodSeleccionado) {
+    agregarAlCarrito(prodSeleccionado.id);
+    modalDetalle.hide();
+  }
+});
+
+formNuevoProducto.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!formNuevoProducto.checkValidity()) {
+    e.stopPropagation();
+    formNuevoProducto.classList.add("was-validated");
+    return;
+  }
+
+  const nuevo = {
+    id: Date.now(),
+    nombre: document.getElementById("formNombre").value.trim(),
+    categoria: document.getElementById("formCategoria").value,
+    precio: parseInt(document.getElementById("formPrecio").value, 10),
+    imagen: document.getElementById("formImg").value.trim() || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80",
+    descripcion: document.getElementById("formDesc").value.trim(),
+    vendedor: document.getElementById("formVendedor").value.trim(),
+    contacto: "contacto@mastertechg.com"
+  };
+
+  productos.unshift(nuevo);
+  formNuevoProducto.reset();
+  formNuevoProducto.classList.remove("was-validated");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalNuevoProducto")).hide();
+  paginaActual = 1;
+  renderizarCatalogo();
+  mostrarAlerta(`"${nuevo.nombre}" publicado en el catálogo activo.`, "success");
+});
+
+function mostrarAlerta(msg, tipo = "info") {
+  contenedorAlertas.innerHTML = `
+    <div class="alert alert-${tipo} alert-dismissible fade show bg-dark border border-${tipo} text-${tipo}" role="alert">
+      ${msg}
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+    </div>`;
+}
+
+document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
+  if (carrito.length === 0) return alert("Orden vacía.");
+  alert("Orden procesada con éxito en el entorno de simulación.");
+  carrito = [];
+  actualizarCarrito();
+  const off = bootstrap.Offcanvas.getInstance(document.getElementById("offcanvasCarrito"));
+  if (off) off.hide();
+});
+
+inputBuscar.addEventListener("input", () => { paginaActual = 1; renderizarCatalogo(); });
+selectCategoria.addEventListener("change", () => { paginaActual = 1; renderizarCatalogo(); });
+rangePrecio.addEventListener("input", (e) => {
+  labelPrecioMax.textContent = formatearPrecio(e.target.value);
+  paginaActual = 1;
+  renderizarCatalogo();
+});
+
+btnLimpiarFiltros.addEventListener("click", () => {
+  inputBuscar.value = "";
+  selectCategoria.value = "todas";
+  rangePrecio.value = 2000000;
+  labelPrecioMax.textContent = formatearPrecio(2000000);
+  paginaActual = 1;
+  renderizarCatalogo();
+});
+
 document.addEventListener("DOMContentLoaded", () => {
-    setupThemeToggle();
-    setupAuthStatus();
-    renderizarDashboard();
-    renderizarTablaMascotas();
-    renderizarTablaConsultas();
-    renderizarTablaVacunas();
-
-    // Actualizar Selects Dinámicos de Mascotas
-    const selects = document.querySelectorAll(".select-mascota-dinamico");
-    selects.forEach(sel => {
-        sel.innerHTML = "";
-        getMascotas().forEach(m => {
-            const opt = document.createElement("option");
-            opt.value = m.nombre;
-            opt.textContent = `${m.nombre} (${m.especie})`;
-            sel.appendChild(opt);
-        });
-    });
-
-    // Formulario Registro de Mascota
-    const formMascota = document.getElementById("formNuevaMascota");
-    if (formMascota) {
-        formMascota.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!formMascota.checkValidity()) {
-                e.stopPropagation();
-                formMascota.classList.add("was-validated");
-                return;
-            }
-
-            const nombre = document.getElementById("nombreMascota").value.trim();
-            const especie = document.getElementById("especieMascota").value;
-            const edad = parseInt(document.getElementById("edadMascota").value.trim(), 10);
-            const tutor = document.getElementById("tutorMascota").value.trim();
-            const telefono = document.getElementById("telefonoMascota") ? document.getElementById("telefonoMascota").value.trim() : "";
-            const estado = document.getElementById("estadoMascota").value;
-
-            const lista = getMascotas();
-            lista.unshift({ id: Date.now(), nombre, especie, edad, tutor, telefono, estado });
-            setMascotas(lista);
-
-            formMascota.reset();
-            formMascota.classList.remove("was-validated");
-
-            const modalEl = document.getElementById("modalMascota");
-            const modalObj = bootstrap.Modal.getInstance(modalEl);
-            if (modalObj) modalObj.hide();
-
-            mostrarToast("Registro Exitoso", `La mascota ${nombre} ha sido ingresada.`, "success");
-            renderizarTablaMascotas();
-            renderizarDashboard();
-        });
-    }
-
-    // Formulario de Consulta
-    const formConsulta = document.getElementById("formNuevaConsulta");
-    if (formConsulta) {
-        formConsulta.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!formConsulta.checkValidity()) {
-                e.stopPropagation();
-                formConsulta.classList.add("was-validated");
-                return;
-            }
-
-            const mascota = document.getElementById("consultaMascota").value;
-            const fecha = document.getElementById("consultaFecha").value;
-            const veterinario = document.getElementById("consultaVeterinario").value;
-            const motivo = document.getElementById("consultaMotivo").value.trim();
-
-            const lista = getConsultas();
-            lista.unshift({ id: Date.now(), mascota, fecha, motivo, veterinario, estado: "Confirmada" });
-            setConsultas(lista);
-
-            formConsulta.reset();
-            formConsulta.classList.remove("was-validated");
-
-            const modalEl = document.getElementById("modalConsulta");
-            const modalObj = bootstrap.Modal.getInstance(modalEl);
-            if (modalObj) modalObj.hide();
-
-            mostrarToast("Consulta Agendada", `Cita confirmada para ${mascota}.`, "success");
-            renderizarTablaConsultas();
-            renderizarDashboard();
-        });
-    }
-
-    // Formulario de Vacunación
-    const formVacuna = document.getElementById("formNuevaVacuna");
-    if (formVacuna) {
-        formVacuna.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!formVacuna.checkValidity()) {
-                e.stopPropagation();
-                formVacuna.classList.add("was-validated");
-                return;
-            }
-
-            const mascota = document.getElementById("vacunaMascota").value;
-            const vacuna = document.getElementById("vacunaNombre").value.trim();
-            const fechaAplicacion = document.getElementById("vacunaFecha").value;
-            const proximaDosis = document.getElementById("vacunaProxima").value;
-
-            const lista = getVacunas();
-            lista.unshift({ id: Date.now(), mascota, vacuna, fechaAplicacion, proximaDosis, estado: "Al día" });
-            setVacunas(lista);
-
-            formVacuna.reset();
-            formVacuna.classList.remove("was-validated");
-
-            const modalEl = document.getElementById("modalVacuna");
-            const modalObj = bootstrap.Modal.getInstance(modalEl);
-            if (modalObj) modalObj.hide();
-
-            mostrarToast("Dosis Registrada", `Vacuna ${vacuna} registrada para ${mascota}.`, "success");
-            renderizarTablaVacunas();
-            renderizarDashboard();
-        });
-    }
-
-    // Formulario de Login
-    const formLogin = document.getElementById("formLogin");
-    if (formLogin) {
-        formLogin.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!formLogin.checkValidity()) {
-                e.stopPropagation();
-                formLogin.classList.add("was-validated");
-                return;
-            }
-
-            const correo = document.getElementById("loginCorreo").value.trim();
-            const user = correo.split("@")[0];
-            sessionStorage.setItem("vet_user", user);
-            window.location.href = "index.html";
-        });
-    }
-
-    // Formulario de Contacto
-    const formContacto = document.getElementById("formContacto");
-    if (formContacto) {
-        formContacto.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!formContacto.checkValidity()) {
-                e.stopPropagation();
-                formContacto.classList.add("was-validated");
-                return;
-            }
-
-            mostrarToast("Mensaje Enviado", "Hemos recibido tu consulta satisfactoriamente.", "success");
-            formContacto.reset();
-            formContacto.classList.remove("was-validated");
-        });
-    }
-
-    // Búsqueda y Filtros reactivos
-    const inputBuscar = document.getElementById("inputBuscar");
-    if (inputBuscar) inputBuscar.addEventListener("input", renderizarTablaMascotas);
-
-    const filtroEspecie = document.getElementById("filtroEspecie");
-    if (filtroEspecie) filtroEspecie.addEventListener("change", renderizarTablaMascotas);
+  renderizarCatalogo();
+  actualizarCarrito();
 });

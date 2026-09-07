@@ -1,169 +1,128 @@
 :root {
-    --unab-navy: #002b49;
-    --unab-navy-dark: #001a2c;
-    --unab-red: #e30613;
-    --unab-red-hover: #b8050f;
-    --unab-gold: #c5a059;
-    --unab-gold-light: #f7f3eb;
-    --bg-surface: #f4f6f9;
-    --card-bg: #ffffff;
-    --text-main: #2b3035;
-    --text-muted-custom: #6c757d;
-    --border-color: #dee2e6;
-    --card-shadow: 0 4px 14px rgba(0, 43, 73, 0.08);
-    --card-shadow-hover: 0 12px 28px rgba(0, 43, 73, 0.15);
-    --transition: all 0.25s ease-in-out;
-}
-
-[data-bs-theme="dark"] {
-    --bg-surface: #0f172a;
-    --card-bg: #1e293b;
-    --text-main: #f8fafc;
-    --text-muted-custom: #94a3b8;
-    --border-color: #334155;
-    --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-    --card-shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.6);
+  --nt-dark: #070b14;
+  --nt-card-bg: #0d1527;
+  --nt-cyan: #00d2ff;
+  --nt-unab-red: #a6192e;
+  --nt-unab-hover: #c41f37;
+  --nt-border: rgba(0, 210, 255, 0.15);
+  --nt-text-muted: #8c9ba5;
 }
 
 body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    color: var(--text-main);
-    background-color: var(--bg-surface);
-    transition: background-color var(--transition), color var(--transition);
+  background-color: #090e1a;
+  color: #e9ecef;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-/* Navbar UNAB */
-.navbar-unab {
-    background-color: var(--unab-navy) !important;
-    border-bottom: 3px solid var(--unab-red);
+/* NAVBAR & HEADER */
+.navbar-tech {
+  background-color: var(--nt-dark) !important;
+  border-bottom: 1px solid var(--nt-border);
 }
 
-.navbar-unab .navbar-brand {
-    font-weight: 800;
-    letter-spacing: 0.5px;
+.brand-tech {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+.brand-tech span.accent {
+  color: var(--nt-cyan);
+}
+.brand-tech .badge-unab {
+  background-color: var(--nt-unab-red);
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
 }
 
-.navbar-unab .nav-link {
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: 500;
-    transition: var(--transition);
+/* HERO SECTION */
+.hero-shopify {
+  background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.08) 0%, rgba(7, 11, 20, 0.95) 75%),
+              linear-gradient(180deg, #070b14 0%, #090e1a 100%);
+  border-bottom: 1px solid var(--nt-border);
 }
 
-.navbar-unab .nav-link:hover,
-.navbar-unab .nav-link.active {
-    color: #ffffff;
-    border-bottom: 2px solid var(--unab-gold);
+/* TARJETAS DE PRODUCTO SHOPIFY STYLE */
+.card-shop {
+  background-color: var(--nt-card-bg);
+  border: 1px solid var(--nt-border);
+  border-radius: 10px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
 }
 
-/* Botones UNAB */
-.btn-unab-primary {
-    background-color: var(--unab-red);
-    border-color: var(--unab-red);
-    color: #ffffff;
-    font-weight: 600;
-    transition: var(--transition);
+.card-shop:hover {
+  transform: translateY(-5px);
+  border-color: var(--nt-cyan);
+  box-shadow: 0 12px 28px rgba(0, 210, 255, 0.12);
 }
 
-.btn-unab-primary:hover {
-    background-color: var(--unab-red-hover);
-    border-color: var(--unab-red-hover);
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(227, 6, 19, 0.25);
+.card-shop-img-wrapper {
+  height: 200px;
+  background: #050811;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
 
-.btn-unab-navy {
-    background-color: var(--unab-navy);
-    border-color: var(--unab-navy);
-    color: #ffffff;
-    font-weight: 600;
-    transition: var(--transition);
+.card-shop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.btn-unab-navy:hover {
-    background-color: var(--unab-navy-dark);
-    border-color: var(--unab-navy-dark);
-    color: #ffffff;
-    transform: translateY(-2px);
+.card-shop:hover .card-shop-img {
+  transform: scale(1.05);
 }
 
-/* Cards & Microinteracciones UI/UX */
-.card-unab {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    background-color: var(--card-bg);
-    box-shadow: var(--card-shadow);
-    transition: var(--transition);
-    overflow: hidden;
+/* BOTONES & ACCIONES */
+.btn-unab {
+  background-color: var(--nt-unab-red);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.btn-unab:hover {
+  background-color: var(--nt-unab-hover);
+  color: #fff;
 }
 
-.card-unab:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--card-shadow-hover);
+.btn-cyan {
+  background-color: var(--nt-cyan);
+  color: #070b14;
+  font-weight: 700;
+  border: none;
+}
+.btn-cyan:hover {
+  background-color: #33dcff;
+  color: #070b14;
 }
 
-.card-accent-red {
-    border-top: 4px solid var(--unab-red);
+.badge-stock {
+  font-size: 0.7rem;
+  background: rgba(0, 210, 255, 0.12);
+  color: var(--nt-cyan);
+  border: 1px solid rgba(0, 210, 255, 0.3);
 }
 
-.card-accent-navy {
-    border-top: 4px solid var(--unab-navy);
+/* MODAL Y OFFCANVAS DARK */
+.modal-content, .offcanvas {
+  background-color: var(--nt-card-bg);
+  color: #e9ecef;
+  border: 1px solid var(--nt-border);
 }
-
-.card-accent-gold {
-    border-top: 4px solid var(--unab-gold);
+.form-control, .form-select {
+  background-color: #070b14;
+  border: 1px solid #1e293b;
+  color: #fff;
 }
-
-/* Badges */
-.badge-unab-navy {
-    background-color: rgba(0, 43, 73, 0.15);
-    color: var(--unab-navy);
-}
-
-[data-bs-theme="dark"] .badge-unab-navy {
-    background-color: rgba(14, 165, 233, 0.2);
-    color: #38bdf8;
-}
-
-.badge-unab-red {
-    background-color: rgba(227, 6, 19, 0.15);
-    color: var(--unab-red);
-}
-
-[data-bs-theme="dark"] .badge-unab-red {
-    background-color: rgba(239, 68, 68, 0.2);
-    color: #f87171;
-}
-
-.badge-unab-gold {
-    background-color: var(--unab-gold-light);
-    color: #8c6d23;
-}
-
-/* Tablas */
-.table-unab thead th {
-    background-color: var(--unab-navy);
-    color: #ffffff;
-    font-weight: 600;
-    border: none;
-}
-
-/* Banner Hero */
-.hero-banner {
-    background: linear-gradient(135deg, var(--unab-navy) 0%, var(--unab-navy-dark) 100%);
-    color: #ffffff;
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-banner::after {
-    content: "";
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 180px;
-    height: 180px;
-    background-color: rgba(227, 6, 19, 0.2);
-    border-radius: 50%;
+.form-control:focus, .form-select:focus {
+  background-color: #070b14;
+  border-color: var(--nt-cyan);
+  color: #fff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 210, 255, 0.2);
 }
