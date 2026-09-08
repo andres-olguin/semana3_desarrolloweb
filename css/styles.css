@@ -14,21 +14,27 @@ body {
   color: var(--nt-text-light);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* NAVBAR BASE */
+/* NAVBAR FIJO QUE NO SE MUEVE AL SCROLLEAR */
 .navbar-tech {
   background-color: var(--nt-dark) !important;
   border-bottom: 1px solid var(--nt-border);
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+}
+
+/* COMPENSACIÓN DEL NAVBAR FIJO */
+.main-page-wrapper {
+  padding-top: 75px;
 }
 
 .brand-tech {
   font-weight: 800;
   letter-spacing: -0.5px;
-  color: #fff;
-  text-decoration: none;
 }
 .brand-tech span.accent {
   color: var(--nt-cyan);
@@ -38,11 +44,20 @@ body {
   font-size: 0.65rem;
   letter-spacing: 0.5px;
   font-weight: 700;
-  color: #fff;
 }
 
-/* RESPONSIVE NAVBAR: ALINEACIÓN PERFECTA EN MÓVIL */
+/* BOTONES DE ACCIÓN COMPACTOS */
+.btn-compact {
+  font-size: 0.78rem !important;
+  padding: 5px 8px !important;
+  white-space: nowrap !important;
+}
+
+/* RESPONSIVE MÓVIL EXACTO Y CONTENIDO */
 @media (max-width: 991.98px) {
+  .main-page-wrapper {
+    padding-top: 70px;
+  }
   .navbar-tech .container-fluid {
     display: flex;
     flex-wrap: wrap;
@@ -55,37 +70,35 @@ body {
   .navbar-toggler {
     order: 1;
     border-color: var(--nt-border) !important;
-    padding: 6px 10px;
-  }
-  .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 210, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    padding: 4px 8px;
   }
   .navbar-collapse {
     order: 2;
     width: 100%;
-    padding-top: 14px;
+    padding-top: 8px;
     border-top: 1px solid rgba(0, 210, 255, 0.15);
-    margin-top: 10px;
+    margin-top: 6px;
   }
   
-  /* FILA COMPACTA: [Publicar] [Carro] [❤️] [A] SIN HUECOS */
+  /* FILA CONTENIDA PARA QUE NADA SE SALGA DE LA PANTALLA */
   .mobile-actions-bar {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: space-between !important;
-    gap: 8px !important;
     width: 100% !important;
-    margin-top: 10px !important;
+    gap: 4px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
   }
-  .mobile-actions-bar .btn {
-    white-space: nowrap;
-    padding: 6px 10px;
+  .mobile-actions-bar .btn-compact {
+    font-size: 0.72rem !important;
+    padding: 4px 6px !important;
   }
 }
 
-/* INPUTS Y FORMULARIOS DE ALTO CONTRASTE */
+/* INPUTS OSCUROS CON ALTO CONTRASTE */
 .form-control, .form-select {
   background-color: #0b1324 !important;
   border: 1px solid #334155 !important;
@@ -108,19 +121,16 @@ body {
   background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.1) 0%, rgba(7, 11, 20, 0.95) 75%),
               linear-gradient(180deg, #070b14 0%, #090e1a 100%);
   border-bottom: 1px solid var(--nt-border);
-  padding: 35px 0 25px 0;
+  padding: 30px 0 20px 0;
 }
 
-/* TARJETAS DE PRODUCTO */
+/* CARDS DE PRODUCTOS */
 .card-shop {
   background-color: var(--nt-card-bg);
   border: 1px solid var(--nt-border);
   border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 .card-shop:hover {
   transform: translateY(-4px);
@@ -146,7 +156,7 @@ body {
   transform: scale(1.05);
 }
 
-/* BOTONES PERSONALIZADOS */
+/* BOTONES */
 .btn-unab {
   background-color: var(--nt-unab-red);
   color: #fff;
@@ -174,20 +184,12 @@ body {
   border: 1px solid var(--nt-cyan);
 }
 
-/* MODAL Y OFFCANVAS */
+/* MODALES Y OFFCANVAS */
 .modal-content, .offcanvas {
   background-color: var(--nt-card-bg);
   color: #ffffff;
   border: 1px solid var(--nt-border);
 }
-.modal-header, .offcanvas-header {
-  border-bottom: 1px solid rgba(0, 210, 255, 0.2);
-}
-.modal-footer {
-  border-top: 1px solid rgba(0, 210, 255, 0.2);
-}
-
-/* SIDEBAR DE FILTROS */
 .sidebar-filter {
   background-color: var(--nt-card-bg);
   border: 1px solid var(--nt-border);
@@ -195,7 +197,7 @@ body {
   padding: 20px;
 }
 
-/* TOAST FLOTANTE */
+/* TOAST */
 .cart-floating-toast {
   position: fixed;
   bottom: 25px;
@@ -205,29 +207,13 @@ body {
   border: 1px solid var(--nt-cyan);
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
   border-radius: 50px;
-  padding: 10px 22px;
-  display: none;
+  padding: 10px 20px;
+  display: flex;
   align-items: center;
   gap: 15px;
   animation: slideUp 0.3s ease;
 }
-.cart-floating-toast.show {
-  display: flex !important;
-}
 @keyframes slideUp {
   from { transform: translateY(80px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
-}
-
-.user-avatar-badge {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: var(--nt-cyan);
-  color: #070b14;
-  font-weight: 800;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
