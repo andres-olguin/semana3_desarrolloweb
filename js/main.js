@@ -1,48 +1,142 @@
-// ==========================================
-// 1. BANCO DE DATOS: 2.400 PRODUCTOS PROCEDURALES
-// ==========================================
-const TECH_POOL = [
-  { n: "MacBook Pro M3 Max 36GB", c: "Workstations", p: 1890000, img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", v: "NexusTech Hub" },
-  { n: "ThinkPad P1 Gen 6 RTX 4080", c: "Workstations", p: 1650000, img: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80", v: "Valpo Tech Supply" },
-  { n: "Dell Precision 5680 i9 64GB", c: "Workstations", p: 1780000, img: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&q=80", v: "NexusTech Hub" },
-  { n: "GPU Nvidia RTX 4090 24GB OC", c: "Hardware", p: 1450000, img: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500&q=80", v: "MasterTech SpA" },
-  { n: "Procesador Ryzen 9 7950X 16C", c: "Hardware", p: 480000, img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=500&q=80", v: "Silicon Reñaca" },
-  { n: "SSD NVMe M.2 4TB Gen4 7400MB/s", c: "Hardware", p: 260000, img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80", v: "Hardware Outlet" },
-  { n: "Monitor OLED 34' Ultrawide 175Hz", c: "Periféricos", p: 720000, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80", v: "NexusTech Hub" },
-  { n: "Teclado Mecánico Custom PCB Lubed", c: "Periféricos", p: 115000, img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80", v: "Gran Royal Peripherals" },
-  { n: "Mouse Inalámbrico 4K Polling Rate", c: "Periféricos", p: 65000, img: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80", v: "Accesorios Viña" },
-  { n: "Audífonos Reference DAC Studio", c: "Periféricos", p: 145000, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", v: "AudioTech Labs" },
-  { n: "Integración Pasarela Webpay / API", c: "Soluciones", p: 100000, img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80", v: "MasterTech SpA" },
-  { n: "Landing Page Conversión y SEO Local", c: "Soluciones", p: 40000, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80", v: "MasterTech SpA" },
-  { n: "Servidor Rack 1U Xeon 64GB ECC", c: "Hardware", p: 980000, img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80", v: "Enterprise Systems" },
-  { n: "Switch Gestionable 24 Puertos PoE", c: "Hardware", p: 210000, img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500&q=80", v: "Enterprise Systems" },
-  { n: "Kit Memoria RAM DDR5 64GB RGB", c: "Hardware", p: 175000, img: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=500&q=80", v: "Silicon Reñaca" }
+// =============================================================================
+// NEXUSTECH STORE - CAMPUS HUB (PROBLEMÁTICA 4)
+// MOTOR PROCEDURAL, CATÁLOGO, CARRITO, RESEÑAS Y PERSISTENCIA FRONTEND
+// =============================================================================
+
+// --- 1. MATRICES GENERADORAS PARA 2.400 PRODUCTOS ÚNICOS ---
+const MARCAS_POOL = [
+  "Lenovo ThinkPad", "Apple MacBook", "Dell Precision", "ASUS ROG", "MSI Creator",
+  "HP ZBook", "Corsair Pro", "Logitech Master", "Kingston Fury", "Samsung EVO Pro",
+  "Nvidia RTX Enterprise", "AMD Radeon Pro", "Western Digital Black", "Audio-Technica Labs", "Cisco Business"
 ];
 
+const COMPONENTES_POOL = [
+  { 
+    cat: "Workstations", 
+    tipo: "Laptop High-Performance", 
+    specs: ["M3 Max 36GB Unificada 1TB SSD", "i9-14900HX 64GB DDR5 RTX 4080", "Ryzen 9 7945HX 32GB RAM 2TB NVMe", "Ultra 9 185H 32GB LPDDR5X OLED 4K", "Xeon W-2245 64GB ECC 1TB PCIe 4.0"],
+    img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", 
+    baseP: 1450000 
+  },
+  { 
+    cat: "Hardware", 
+    tipo: "Placa Gráfica & GPU Pro", 
+    specs: ["RTX 4090 24GB GDDR6X OC", "RX 7900 XTX 24GB Vapor-X", "RTX 4070 Ti Super 16GB Dual Fan", "Acelerador Tensor Core 16GB", "RTX 4080 Super 16GB Trinity"],
+    img: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500&q=80", 
+    baseP: 890000 
+  },
+  { 
+    cat: "Hardware", 
+    tipo: "Unidad de Almacenamiento NVMe", 
+    specs: ["4TB Gen4 7400MB/s Heatsink", "2TB Gen5 10000MB/s Pro", "Kit 64GB DDR5 6000MHz CL30", "Ryzen 9 7950X 16 Cores 32 Threads", "Core i9 14900K Unlocked Box"],
+    img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80", 
+    baseP: 180000 
+  },
+  { 
+    cat: "Periféricos", 
+    tipo: "Dispositivo de Entrada y Audio", 
+    specs: ["Audífonos Reference DAC Studio 80Ω", "Teclado Mecánico Gasket Mount RGB", "Monitor 34' OLED 175Hz 0.1ms", "Mouse Ergonómico 4K Polling Optical", "Microfono Cardioide USB-C 24bit"],
+    img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", 
+    baseP: 95000 
+  },
+  { 
+    cat: "Hardware", 
+    tipo: "Infraestructura & Servidor", 
+    specs: ["Rack 1U Xeon Silver 64GB ECC", "Switch 24 Puertos Gigabit PoE+", "Router Gateway Dual WAN 10G", "Storage Array 8 Bahías RAID Hot-Swap", "Mini Cluster Proxmox 3 Nodos"],
+    img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80", 
+    baseP: 650000 
+  },
+  { 
+    cat: "Soluciones", 
+    tipo: "Servicio e Implementación", 
+    specs: ["Pasarela Webpay Plus API REST", "Pipeline CI/CD Docker Kubernetes", "Landing Page SEO Optimizada CoreWebVitals", "Microservicio Auth JWT en Node.js", "Auditoría de Vulnerabilidades Web OWASP"],
+    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80", 
+    baseP: 80000 
+  }
+];
+
+const VENDEDORES_POOL = ["NexusTech Hub", "Valpo Tech Supply", "MasterTech SpA", "Silicon Reñaca", "Gran Royal Labs", "Enterprise Systems"];
+
+// --- 2. BANCO DE RESEÑAS PROCEDURALES POR CATEGORÍA ---
+const COMENTARIOS_CONTEXTUALES = {
+  "Workstations": [
+    "Compila soluciones pesadas sin sobrecalentarse. La pantalla tiene una fidelidad de color espectacular.",
+    "El rendimiento en máquinas virtuales y emuladores es instantáneo. Batería sólida.",
+    "Excelente potencia térmica para proyectos universitarios de alto cómputo. Totalmente conforme.",
+    "Llegó en caja sellada a campus Viña del Mar. Rinde sobre 120 FPS en pruebas de estrés."
+  ],
+  "Hardware": [
+    "Temperaturas por debajo de 65°C en benchmark sostenido. Las frecuencias boost son estables.",
+    "Tasa de lectura y escritura idéntica a la ficha de laboratorio. Cero cuellos de botella.",
+    "Componente certificado y con serial verificado con MasterTech. Despacho rapidísimo.",
+    "Gran eficiencia energética y disipación de calor silenciosa bajo carga pesada."
+  ],
+  "Periféricos": [
+    "Respuesta táctil y acústica impecable. Se nota la diferencia de los 4.000 Hz de polling rate.",
+    "El aislamiento pasivo y la definición en frecuencias medias y agudas es excelente.",
+    "Ergonomía perfecta para jornadas largas de programación. Acabados de aluminio de gran nivel.",
+    "Calibrado de fábrica muy preciso, plug and play inmediato en Linux y Windows."
+  ],
+  "Soluciones": [
+    "Integración limpia y documentada. Cumplió con los estándares de entrega antes del plazo.",
+    "Código legible con arquitectura modular. Las pruebas unitarias pasaron al 100%.",
+    "Soporte directo y despliegue continuo sin caídas de servicio. Recomendado para la facultad.",
+    "Excelente retorno de inversión y optimización en tiempos de respuesta API."
+  ]
+};
+
+const USUARIOS_RESEÑAS = [
+  { nombre: "Camila Rojas", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" },
+  { nombre: "Matías Soto", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
+  { nombre: "Ignacio Vera", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" },
+  { nombre: "Sofía Morales", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
+  { nombre: "Diego Arancibia", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&q=80" },
+  { nombre: "Valentina Peña", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" },
+  { nombre: "Enrique Chamys", avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" },
+  { nombre: "Maximiliano Valdés", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&q=80" }
+];
+
+// --- 3. GENERACIÓN EN MEMORIA: 2.400 ÍTEMS DIVERSIFICADOS ---
 let productos = [];
-for (let i = 1; i <= 2400; i++) {
-  const base = TECH_POOL[(i - 1) % TECH_POOL.length];
-  const delta = (i * 47) % 65000;
+const TOTAL_PRODUCTOS = 2400;
+
+for (let i = 1; i <= TOTAL_PRODUCTOS; i++) {
+  const comp = COMPONENTES_POOL[(i - 1) % COMPONENTES_POOL.length];
+  const marca = MARCAS_POOL[(i * 5) % MARCAS_POOL.length];
+  const spec = comp.specs[(i * 3) % comp.specs.length];
+  const vendedor = VENDEDORES_POOL[(i * 7) % VENDEDORES_POOL.length];
+  
+  // Delta matemático controlado para precios realistas
+  const delta = ((i * 1337) % 450000);
+  const precioFinal = comp.baseP + delta;
+  const lote = 10000 + i;
+
+  // Generación procedural de 2 reseñas específicas por cada producto
+  const textosCat = COMENTARIOS_CONTEXTUALES[comp.cat] || COMENTARIOS_CONTEXTUALES["Hardware"];
+  const u1 = USUARIOS_RESEÑAS[(i * 2) % USUARIOS_RESEÑAS.length];
+  const u2 = USUARIOS_RESEÑAS[(i * 3 + 1) % USUARIOS_RESEÑAS.length];
+  const t1 = textosCat[(i * 2) % textosCat.length];
+  const t2 = textosCat[(i * 3 + 1) % textosCat.length];
+  const rating1 = 4 + (i % 2);
+  const rating2 = 5;
+
   productos.push({
     id: i,
-    nombre: `${base.n} (Lote #${10000 + i})`,
-    categoria: base.c,
-    precio: base.p + delta,
-    imagen: base.img,
-    descripcion: `Solución técnica certificada para despliegue productivo y alto rendimiento. Testeada en laboratorio local.`,
-    vendedor: base.v,
-    contacto: "contacto@mastertechg.com"
+    nombre: `${marca} ${comp.tipo} - ${spec} (Lote #${lote})`,
+    categoria: comp.cat,
+    precio: precioFinal,
+    imagen: comp.img,
+    descripcion: `Solución técnica de alta gama: ${spec}. Certificada por el laboratorio de hardware NexusTech para comunidad UNAB.`,
+    vendedor: vendedor,
+    contacto: "contacto@mastertechg.com",
+    reseñas: [
+      { usuario: u1.nombre, avatar: u1.avatar, rating: rating1, texto: t1 },
+      { usuario: u2.nombre, avatar: u2.avatar, rating: rating2, texto: t2 }
+    ]
   });
 }
 
-const RESEÑAS_POOL = [
-  { usuario: "Camila Rojas", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80", rating: 5, texto: "Llegó al día siguiente a Viña del Mar. Excelente empaque térmico, rinde perfecto en renders." },
-  { usuario: "Matías Soto", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", rating: 4, texto: "Muy buen producto. Cumple con la frecuencia prometida, aunque los ventiladores son algo ruidosos al 100%." },
-  { usuario: "Ignacio Vera", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80", rating: 5, texto: "Garantía validada directamente con MasterTech. Muy superior al soporte tradicional." },
-  { usuario: "Sofía Morales", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", rating: 3, texto: "El rendimiento es bueno pero el manual venía solo en inglés. Tuve que pedir asistencia técnica." }
-];
-
-// ESTADOS GLOBALES
+// --- 4. ESTADOS GLOBALES ---
 let paginaActual = 1;
 const ITEMS_POR_PAGINA = 24;
 let carrito = [];
@@ -53,6 +147,7 @@ function formatearPrecio(n) {
   return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(n);
 }
 
+// --- 5. FILTRADO REACTIVO MULTICRITERIO ---
 function filtrarProductos() {
   const inputBuscar = document.getElementById("inputBuscar");
   const selectCategoria = document.getElementById("selectCategoria");
@@ -63,13 +158,14 @@ function filtrarProductos() {
   const maxP = rangePrecio ? parseInt(rangePrecio.value, 10) : 2500000;
 
   return productos.filter(p => {
-    const matchNom = p.nombre.toLowerCase().includes(q) || p.descripcion.toLowerCase().includes(q);
+    const matchNom = p.nombre.toLowerCase().includes(q) || p.descripcion.toLowerCase().includes(q) || p.vendedor.toLowerCase().includes(q);
     const matchCat = (c === "todas") || (p.categoria === c);
     const matchP = p.precio <= maxP;
     return matchNom && matchCat && matchP;
   });
 }
 
+// --- 6. RENDERIZADO DE CATÁLOGO (PAGINACIÓN REACTIVA) ---
 function renderizarCatalogo() {
   const grilla = document.getElementById("grillaProductos");
   const contador = document.getElementById("contadorProductos");
@@ -106,7 +202,7 @@ function renderizarCatalogo() {
               <i class="bi ${favoritos.has(p.id) ? 'bi-heart-fill' : 'bi-heart'}"></i>
             </button>
           </div>
-          <h6 class="card-title fw-bold text-truncate text-white mb-1" style="cursor: pointer;" onclick="verDetalle(${p.id})">${p.nombre}</h6>
+          <h6 class="card-title fw-bold text-truncate text-white mb-1" style="cursor: pointer;" onclick="verDetalle(${p.id})" title="${p.nombre}">${p.nombre}</h6>
           <p class="small text-muted-custom mb-2 text-truncate">${p.vendedor}</p>
           <div class="mt-auto pt-2 border-top border-secondary d-flex justify-content-between align-items-center">
             <span class="fw-bold text-info">${formatearPrecio(p.precio)}</span>
@@ -150,6 +246,7 @@ function cambiarPagina(nueva) {
   window.scrollTo({ top: 180, behavior: 'smooth' });
 }
 
+// --- 7. TOAST NOTIFICADOR REACTIVO ---
 function mostrarToastCarrito(nombreProd, cantidad) {
   const toast = document.getElementById("cartToast");
   const msg = document.getElementById("toastMsg");
@@ -167,6 +264,7 @@ function mostrarToastCarrito(nombreProd, cantidad) {
   }, 4500);
 }
 
+// --- 8. GESTIÓN DEL CARRITO DE COMPRAS (OFFCANVAS) ---
 function agregarAlCarritoRapido(id) {
   const p = productos.find(x => x.id === id);
   if (!p) return;
@@ -245,6 +343,7 @@ function eliminarProducto(id) {
   }
 }
 
+// --- 9. MODAL DE DETALLE Y CARGA DE RESEÑAS DINÁMICAS ---
 function verDetalle(id) {
   const prod = productos.find(p => p.id === id);
   if (!prod) return;
@@ -258,25 +357,28 @@ function verDetalle(id) {
   document.getElementById("modalDetalleVendedor").textContent = prod.vendedor;
   document.getElementById("modalDetalleContacto").textContent = `Contacto: ${prod.contacto}`;
 
-  const reseñasHtml = RESEÑAS_POOL.map(r => `
-    <div class="p-2 rounded bg-dark border border-secondary">
-      <div class="d-flex align-items-center justify-content-between mb-1">
-        <div class="d-flex align-items-center gap-2">
-          <img src="${r.avatar}" class="review-avatar" alt="${r.usuario}">
-          <span class="small fw-bold text-white">${r.usuario}</span>
+  // Reseñas únicas pertenecientes a este producto exacto
+  const contenedor = document.getElementById("contenedorReseñas");
+  if (contenedor && prod.reseñas) {
+    contenedor.innerHTML = prod.reseñas.map(r => `
+      <div class="p-2 rounded bg-dark border border-secondary mb-2">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <div class="d-flex align-items-center gap-2">
+            <img src="${r.avatar}" class="review-avatar" alt="${r.usuario}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+            <span class="small fw-bold text-white">${r.usuario}</span>
+          </div>
+          <div class="text-warning small">${'<i class="bi bi-star-fill"></i>'.repeat(r.rating)}</div>
         </div>
-        <div class="text-warning small">${'<i class="bi bi-star-fill"></i>'.repeat(r.rating)}</div>
+        <p class="small text-muted-custom mb-0">${r.texto}</p>
       </div>
-      <p class="small text-muted-custom mb-0">${r.texto}</p>
-    </div>
-  `).join("");
-  document.getElementById("contenedorReseñas").innerHTML = reseñasHtml;
+    `).join("");
+  }
 
   const modalEl = document.getElementById("modalDetalle");
   if (modalEl) bootstrap.Modal.getOrCreateInstance(modalEl).show();
 }
 
-// AUTENTICACIÓN
+// --- 10. AUTENTICACIÓN Y PERSISTENCIA (LOCALSTORAGE) ---
 function obtenerUsuarioActivo() {
   try {
     const u = localStorage.getItem("nexustech_user");
@@ -322,13 +424,21 @@ function abrirPerfil() {
   if (m) bootstrap.Modal.getOrCreateInstance(m).show();
 }
 
-// INICIALIZACIÓN DE EVENTOS SEGUROS
+// --- 11. INICIALIZACIÓN DE EVENTOS Y FORMULARIOS ---
 document.addEventListener("DOMContentLoaded", () => {
+  // Asegurar sesión por defecto requerida para la defensa
+  if (!localStorage.getItem("nexustech_user")) {
+    localStorage.setItem("nexustech_user", JSON.stringify({
+      usuario: "Andrés",
+      email: "andres.olguin@uandresbello.edu"
+    }));
+  }
+
   renderizarCatalogo();
   actualizarCarrito();
   actualizarEstadoAuth();
 
-  // Búsqueda y Filtros
+  // Búsqueda y Filtros reactivos
   const inpB = document.getElementById("inputBuscar");
   const selC = document.getElementById("selectCategoria");
   const rngP = document.getElementById("rangePrecio");
@@ -378,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Checkout
+  // Checkout Transaccional
   const fCheck = document.getElementById("formCheckout");
   if (fCheck) {
     fCheck.addEventListener("submit", (e) => {
@@ -393,7 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Publicar Producto
+  // Publicar Nuevo Producto (was-validated)
   const fPub = document.getElementById("formNuevoProducto");
   if (fPub) {
     fPub.addEventListener("submit", (e) => {
@@ -411,7 +521,10 @@ document.addEventListener("DOMContentLoaded", () => {
         imagen: document.getElementById("formImg")?.value.trim() || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80",
         descripcion: document.getElementById("formDesc").value.trim(),
         vendedor: document.getElementById("formVendedor").value.trim(),
-        contacto: "contacto@mastertechg.com"
+        contacto: "contacto@mastertechg.com",
+        reseñas: [
+          { usuario: "Comunidad UNAB", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80", rating: 5, texto: "Publicación reciente verificada en el marketplace." }
+        ]
       };
       productos.unshift(nuevo);
       fPub.reset();
