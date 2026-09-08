@@ -14,7 +14,7 @@
 </head>
 <body>
 
-  <!-- NAVBAR TECNOLÓGICO CON RESPONSIVE REFINADO -->
+  <!-- NAVBAR TECNOLÓGICO CON RESPONSIVE COMPACTO -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-tech sticky-top py-2">
     <div class="container-fluid px-3 px-lg-4">
       
@@ -43,19 +43,21 @@
           </div>
         </div>
 
-        <!-- ACCIONES RÁPIDAS (MOBILE ADAPTADO) -->
-        <div class="mobile-actions-bar mt-2 mt-lg-0 d-flex align-items-center justify-content-lg-end gap-2">
-          <button class="btn btn-outline-info btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#modalPublicar">
+        <!-- ACCIONES RÁPIDAS (ACOMODO PERFECTO EN UNA FILA MÓVIL) -->
+        <div class="mobile-actions-bar mt-2 mt-lg-0 d-flex align-items-center justify-content-between justify-content-lg-end gap-2">
+          <button class="btn btn-outline-info btn-sm fw-semibold flex-grow-1 flex-lg-grow-0" data-bs-toggle="modal" data-bs-target="#modalPublicar">
             <i class="fa-solid fa-plus me-1"></i> Publicar Ítem
           </button>
 
+          <!-- CARRO CENTRADO ENTRE PUBLICAR Y CORAZÓN -->
+          <button class="btn btn-cyan btn-sm fw-bold d-flex align-items-center justify-content-center gap-2 px-3 flex-grow-1 flex-lg-grow-0" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <i class="fa-solid fa-lock"></i> Carro <span class="badge bg-dark text-cyan rounded-pill" id="cartBadgeCount">0</span>
+          </button>
+
+          <!-- FAVORITOS CORAZÓN -->
           <button class="btn btn-dark border-secondary btn-sm position-relative text-danger px-3" title="Favoritos">
             <i class="fa-solid fa-heart"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">0</span>
-          </button>
-
-          <button class="btn btn-cyan btn-sm fw-bold d-flex align-items-center gap-2 px-3" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-            <i class="fa-solid fa-lock"></i> Carro <span class="badge bg-dark text-cyan rounded-pill" id="cartBadgeCount">0</span>
           </button>
 
           <!-- CONTENEDOR DE SESIÓN / AVATAR -->

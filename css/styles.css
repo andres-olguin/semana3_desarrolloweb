@@ -41,7 +41,7 @@ body {
   color: #fff;
 }
 
-/* RESPONSIVE NAVBAR: LOGO ARRIBA CON BADGE DEBAJO Y HAMBURGUESA A LA DERECHA */
+/* RESPONSIVE NAVBAR: ALINEACIÓN PERFECTA EN MÓVIL */
 @media (max-width: 991.98px) {
   .navbar-tech .container-fluid {
     display: flex;
@@ -67,14 +67,21 @@ body {
     border-top: 1px solid rgba(0, 210, 255, 0.15);
     margin-top: 10px;
   }
+  
+  /* FILA COMPACTA: [Publicar] [Carro] [❤️] [A] SIN HUECOS */
   .mobile-actions-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 10px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .mobile-actions-bar .btn {
+    white-space: nowrap;
+    padding: 6px 10px;
   }
 }
 
