@@ -1,142 +1,126 @@
 // =============================================================================
 // NEXUSTECH STORE - CAMPUS HUB (PROBLEMÁTICA 4)
-// MOTOR PROCEDURAL, CATÁLOGO, CARRITO, RESEÑAS Y PERSISTENCIA FRONTEND
+// MOTOR COMBINATORIO DE ALTA DIVERSIDAD & RESEÑAS ÚNICAS
 // =============================================================================
 
-// --- 1. MATRICES GENERADORAS PARA 2.400 PRODUCTOS ÚNICOS ---
-const MARCAS_POOL = [
-  "Lenovo ThinkPad", "Apple MacBook", "Dell Precision", "ASUS ROG", "MSI Creator",
-  "HP ZBook", "Corsair Pro", "Logitech Master", "Kingston Fury", "Samsung EVO Pro",
-  "Nvidia RTX Enterprise", "AMD Radeon Pro", "Western Digital Black", "Audio-Technica Labs", "Cisco Business"
+const MARCAS = [
+  "ASUS ROG", "Lenovo ThinkPad", "Apple Pro", "Dell Precision", "MSI Creator",
+  "HP Omen Enterprise", "Corsair Dominator", "Logitech MX", "Kingston Fury Renegade",
+  "Samsung 990 Pro", "Gigabyte AORUS", "Sony Master Series"
 ];
 
-const COMPONENTES_POOL = [
-  { 
-    cat: "Workstations", 
-    tipo: "Laptop High-Performance", 
-    specs: ["M3 Max 36GB Unificada 1TB SSD", "i9-14900HX 64GB DDR5 RTX 4080", "Ryzen 9 7945HX 32GB RAM 2TB NVMe", "Ultra 9 185H 32GB LPDDR5X OLED 4K", "Xeon W-2245 64GB ECC 1TB PCIe 4.0"],
-    img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", 
-    baseP: 1450000 
-  },
-  { 
-    cat: "Hardware", 
-    tipo: "Placa Gráfica & GPU Pro", 
-    specs: ["RTX 4090 24GB GDDR6X OC", "RX 7900 XTX 24GB Vapor-X", "RTX 4070 Ti Super 16GB Dual Fan", "Acelerador Tensor Core 16GB", "RTX 4080 Super 16GB Trinity"],
-    img: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500&q=80", 
-    baseP: 890000 
-  },
-  { 
-    cat: "Hardware", 
-    tipo: "Unidad de Almacenamiento NVMe", 
-    specs: ["4TB Gen4 7400MB/s Heatsink", "2TB Gen5 10000MB/s Pro", "Kit 64GB DDR5 6000MHz CL30", "Ryzen 9 7950X 16 Cores 32 Threads", "Core i9 14900K Unlocked Box"],
-    img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80", 
-    baseP: 180000 
-  },
-  { 
-    cat: "Periféricos", 
-    tipo: "Dispositivo de Entrada y Audio", 
-    specs: ["Audífonos Reference DAC Studio 80Ω", "Teclado Mecánico Gasket Mount RGB", "Monitor 34' OLED 175Hz 0.1ms", "Mouse Ergonómico 4K Polling Optical", "Microfono Cardioide USB-C 24bit"],
-    img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", 
-    baseP: 95000 
-  },
-  { 
-    cat: "Hardware", 
-    tipo: "Infraestructura & Servidor", 
-    specs: ["Rack 1U Xeon Silver 64GB ECC", "Switch 24 Puertos Gigabit PoE+", "Router Gateway Dual WAN 10G", "Storage Array 8 Bahías RAID Hot-Swap", "Mini Cluster Proxmox 3 Nodos"],
-    img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80", 
-    baseP: 650000 
-  },
-  { 
-    cat: "Soluciones", 
-    tipo: "Servicio e Implementación", 
-    specs: ["Pasarela Webpay Plus API REST", "Pipeline CI/CD Docker Kubernetes", "Landing Page SEO Optimizada CoreWebVitals", "Microservicio Auth JWT en Node.js", "Auditoría de Vulnerabilidades Web OWASP"],
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80", 
-    baseP: 80000 
-  }
+const FAMILIAS_PRODUCTO = [
+  // Workstations
+  { cat: "Workstations", tipo: "Workstation Móvil", imgs: ["https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&q=80", "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&q=80"], pMin: 1200000, pMax: 2350000 },
+  { cat: "Workstations", tipo: "Laptop Ultrabook Dev", imgs: ["https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80", "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=500&q=80"], pMin: 850000, pMax: 1600000 },
+  { cat: "Workstations", tipo: "Mini PC Cluster Node", imgs: ["https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=500&q=80"], pMin: 450000, pMax: 890000 },
+
+  // Hardware / Componentes
+  { cat: "Hardware", tipo: "Tarjeta Gráfica GPU", imgs: ["https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500&q=80"], pMin: 620000, pMax: 1980000 },
+  { cat: "Hardware", tipo: "Procesador Multi-Core", imgs: ["https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=500&q=80"], pMin: 280000, pMax: 650000 },
+  { cat: "Hardware", tipo: "Unidad NVMe M.2 Gen4", imgs: ["https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80"], pMin: 95000, pMax: 320000 },
+  { cat: "Hardware", tipo: "Kit Memoria RAM Dual Channel", imgs: ["https://images.unsplash.com/photo-1562976540-1502c2145186?w=500&q=80"], pMin: 85000, pMax: 240000 },
+  { cat: "Hardware", tipo: "Servidor Rack 1U Hot-Swap", imgs: ["https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&q=80"], pMin: 950000, pMax: 2400000 },
+  { cat: "Hardware", tipo: "Switch Gestionable L2/L3", imgs: ["https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500&q=80"], pMin: 180000, pMax: 490000 },
+  { cat: "Hardware", tipo: "Placa Madre Arquitectura Pro", imgs: ["https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80"], pMin: 190000, pMax: 520000 },
+
+  // Periféricos
+  { cat: "Periféricos", tipo: "Audífonos Monitores DAC", imgs: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80"], pMin: 65000, pMax: 210000 },
+  { cat: "Periféricos", tipo: "Teclado Mecánico Custom", imgs: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80"], pMin: 55000, pMax: 185000 },
+  { cat: "Periféricos", tipo: "Monitor Curvo Color Grading", imgs: ["https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80"], pMin: 280000, pMax: 990000 },
+  { cat: "Periféricos", tipo: "Mouse Inalámbrico Ultra-Polling", imgs: ["https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80"], pMin: 35000, pMax: 120000 },
+  { cat: "Periféricos", tipo: "Micrófono Estudio USB Condenser", imgs: ["https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80"], pMin: 48000, pMax: 165000 },
+
+  // Soluciones
+  { cat: "Soluciones", tipo: "Pasarela Webpay Plus API", imgs: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80"], pMin: 90000, pMax: 250000 },
+  { cat: "Soluciones", tipo: "Landing Page CoreWebVitals", imgs: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80"], pMin: 50000, pMax: 150000 },
+  { cat: "Soluciones", tipo: "Auditoría Seguridad Web OWASP", imgs: ["https://images.unsplash.com/photo-1563986768609-322da13575f3?w=500&q=80"], pMin: 120000, pMax: 350000 }
 ];
 
-const VENDEDORES_POOL = ["NexusTech Hub", "Valpo Tech Supply", "MasterTech SpA", "Silicon Reñaca", "Gran Royal Labs", "Enterprise Systems"];
-
-// --- 2. BANCO DE RESEÑAS PROCEDURALES POR CATEGORÍA ---
-const COMENTARIOS_CONTEXTUALES = {
-  "Workstations": [
-    "Compila soluciones pesadas sin sobrecalentarse. La pantalla tiene una fidelidad de color espectacular.",
-    "El rendimiento en máquinas virtuales y emuladores es instantáneo. Batería sólida.",
-    "Excelente potencia térmica para proyectos universitarios de alto cómputo. Totalmente conforme.",
-    "Llegó en caja sellada a campus Viña del Mar. Rinde sobre 120 FPS en pruebas de estrés."
-  ],
-  "Hardware": [
-    "Temperaturas por debajo de 65°C en benchmark sostenido. Las frecuencias boost son estables.",
-    "Tasa de lectura y escritura idéntica a la ficha de laboratorio. Cero cuellos de botella.",
-    "Componente certificado y con serial verificado con MasterTech. Despacho rapidísimo.",
-    "Gran eficiencia energética y disipación de calor silenciosa bajo carga pesada."
-  ],
-  "Periféricos": [
-    "Respuesta táctil y acústica impecable. Se nota la diferencia de los 4.000 Hz de polling rate.",
-    "El aislamiento pasivo y la definición en frecuencias medias y agudas es excelente.",
-    "Ergonomía perfecta para jornadas largas de programación. Acabados de aluminio de gran nivel.",
-    "Calibrado de fábrica muy preciso, plug and play inmediato en Linux y Windows."
-  ],
-  "Soluciones": [
-    "Integración limpia y documentada. Cumplió con los estándares de entrega antes del plazo.",
-    "Código legible con arquitectura modular. Las pruebas unitarias pasaron al 100%.",
-    "Soporte directo y despliegue continuo sin caídas de servicio. Recomendado para la facultad.",
-    "Excelente retorno de inversión y optimización en tiempos de respuesta API."
-  ]
-};
-
-const USUARIOS_RESEÑAS = [
-  { nombre: "Camila Rojas", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" },
-  { nombre: "Matías Soto", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
-  { nombre: "Ignacio Vera", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" },
-  { nombre: "Sofía Morales", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
-  { nombre: "Diego Arancibia", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&q=80" },
-  { nombre: "Valentina Peña", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" },
-  { nombre: "Enrique Chamys", avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" },
-  { nombre: "Maximiliano Valdés", avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&q=80" }
+const SERIES_MODELO = [
+  "Elite Series", "Vanguard Edition", "Carbon Spec", "Aero Pro",
+  "Studio Line", "Industrial Tier", "X-Treme Edition", "Prime Build"
 ];
 
-// --- 3. GENERACIÓN EN MEMORIA: 2.400 ÍTEMS DIVERSIFICADOS ---
+const SPECS_LISTA = [
+  "32GB RAM / 1TB NVMe Gen4",
+  "64GB DDR5 / RTX 4080 16GB",
+  "24GB VRAM GDDR6X / 450W TDP",
+  "16 Cores / 32 Hilos 5.7GHz Boost",
+  "4TB NVMe / 7400MB/s Lectura",
+  "OLED 4K 144Hz / 99% DCI-P3",
+  "Linear Red Switches / Hot-Swap",
+  "Cancelación Activa 45dB / 24-bit DAC",
+  "10G SFP+ Dual / 48 Puertos PoE+",
+  "Despliegue Docker Swarm + SSL Wildcard"
+];
+
+const NOMBRES_ESTUDIANTES = [
+  "Camila Rojas", "Matías Soto", "Ignacio Vera", "Sofía Morales", "Diego Arancibia",
+  "Valentina Peña", "Nicolás Castro", "Maximiliano Valdés", "Enrique Chamys", "Miguel Margas",
+  "Javier Figueroa", "Fernanda Tapia", "Sebastián Muñoz", "Catalina Parra", "Tomás Herrera"
+];
+
+const PLANTILLAS_OPINION = [
+  "Excelente rendimiento para las sesiones de laboratorio en la UNAB. La temperatura se mantiene estable bajo carga.",
+  "Comprado con despacho dentro de Viña del Mar, llegó en menos de 24 horas y con sello de garantía intacto.",
+  "Llevo 3 semanas usándolo para desarrollo y compilación pesada; cero caídas de frames ni problemas térmicos.",
+  "La construcción de los materiales es premium. Cumple 100% con la frecuencia y especificaciones descritas.",
+  "Muy buena integración en el entorno de trabajo. El soporte del vendedor fue súper rápido para responder dudas.",
+  "Relación precio-calidad insuperable comparado con el retail tradicional. Totalmente certificado para ingeniería."
+];
+
+const VENDEDORES = [
+  "NexusTech Hub", "Valpo Tech Supply", "MasterTech SpA", "Silicon Reñaca", "Enterprise Labs", "Viña Dev Hardware"
+];
+
+// --- GENERACIÓN DE LOS 2.400 ÍTEMS DIVERSIFICADOS ---
 let productos = [];
 const TOTAL_PRODUCTOS = 2400;
 
 for (let i = 1; i <= TOTAL_PRODUCTOS; i++) {
-  const comp = COMPONENTES_POOL[(i - 1) % COMPONENTES_POOL.length];
-  const marca = MARCAS_POOL[(i * 5) % MARCAS_POOL.length];
-  const spec = comp.specs[(i * 3) % comp.specs.length];
-  const vendedor = VENDEDORES_POOL[(i * 7) % VENDEDORES_POOL.length];
-  
-  // Delta matemático controlado para precios realistas
-  const delta = ((i * 1337) % 450000);
-  const precioFinal = comp.baseP + delta;
-  const lote = 10000 + i;
+  const fam = FAMILIAS_PRODUCTO[(i * 7) % FAMILIAS_PRODUCTO.length];
+  const marca = MARCAS[(i * 11) % MARCAS.length];
+  const serie = SERIES_MODELO[(i * 13) % SERIES_MODELO.length];
+  const spec = SPECS_LISTA[(i * 17) % SPECS_LISTA.length];
+  const img = fam.imgs[i % fam.imgs.length];
+  const vend = VENDEDORES[(i * 5) % VENDEDORES.length];
 
-  // Generación procedural de 2 reseñas específicas por cada producto
-  const textosCat = COMENTARIOS_CONTEXTUALES[comp.cat] || COMENTARIOS_CONTEXTUALES["Hardware"];
-  const u1 = USUARIOS_RESEÑAS[(i * 2) % USUARIOS_RESEÑAS.length];
-  const u2 = USUARIOS_RESEÑAS[(i * 3 + 1) % USUARIOS_RESEÑAS.length];
-  const t1 = textosCat[(i * 2) % textosCat.length];
-  const t2 = textosCat[(i * 3 + 1) % textosCat.length];
-  const rating1 = 4 + (i % 2);
-  const rating2 = 5;
+  const rango = fam.pMax - fam.pMin;
+  const precioCalculado = fam.pMin + Math.floor(((i * 9973) % rango) / 1000) * 1000;
+
+  const autor1 = NOMBRES_ESTUDIANTES[(i * 3) % NOMBRES_ESTUDIANTES.length];
+  const autor2 = NOMBRES_ESTUDIANTES[(i * 3 + 1) % NOMBRES_ESTUDIANTES.length];
+  const texto1 = `${PLANTILLAS_OPINION[(i * 2) % PLANTILLAS_OPINION.length]} Destaco especialmente el detalle de: ${spec}.`;
+  const texto2 = `${PLANTILLAS_OPINION[(i * 2 + 1) % PLANTILLAS_OPINION.length]} Verificado con ${marca}.`;
 
   productos.push({
     id: i,
-    nombre: `${marca} ${comp.tipo} - ${spec} (Lote #${lote})`,
-    categoria: comp.cat,
-    precio: precioFinal,
-    imagen: comp.img,
-    descripcion: `Solución técnica de alta gama: ${spec}. Certificada por el laboratorio de hardware NexusTech para comunidad UNAB.`,
-    vendedor: vendedor,
+    nombre: `${marca} ${fam.tipo} ${serie} (${spec})`,
+    categoria: fam.cat,
+    precio: precioCalculado,
+    imagen: img,
+    descripcion: `Hardware certificado de alto nivel para estudiantes y profesionales. Configuración equipada con ${spec}. Verificado por el laboratorio de testing NexusTech.`,
+    vendedor: vend,
     contacto: "contacto@mastertechg.com",
     reseñas: [
-      { usuario: u1.nombre, avatar: u1.avatar, rating: rating1, texto: t1 },
-      { usuario: u2.nombre, avatar: u2.avatar, rating: rating2, texto: t2 }
+      {
+        usuario: autor1,
+        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(autor1)}`,
+        rating: 5,
+        texto: texto1
+      },
+      {
+        usuario: autor2,
+        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(autor2)}`,
+        rating: 4 + (i % 2),
+        texto: texto2
+      }
     ]
   });
 }
 
-// --- 4. ESTADOS GLOBALES ---
+// ESTADOS GLOBALES
 let paginaActual = 1;
 const ITEMS_POR_PAGINA = 24;
 let carrito = [];
@@ -147,7 +131,6 @@ function formatearPrecio(n) {
   return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(n);
 }
 
-// --- 5. FILTRADO REACTIVO MULTICRITERIO ---
 function filtrarProductos() {
   const inputBuscar = document.getElementById("inputBuscar");
   const selectCategoria = document.getElementById("selectCategoria");
@@ -165,7 +148,6 @@ function filtrarProductos() {
   });
 }
 
-// --- 6. RENDERIZADO DE CATÁLOGO (PAGINACIÓN REACTIVA) ---
 function renderizarCatalogo() {
   const grilla = document.getElementById("grillaProductos");
   const contador = document.getElementById("contadorProductos");
@@ -246,7 +228,6 @@ function cambiarPagina(nueva) {
   window.scrollTo({ top: 180, behavior: 'smooth' });
 }
 
-// --- 7. TOAST NOTIFICADOR REACTIVO ---
 function mostrarToastCarrito(nombreProd, cantidad) {
   const toast = document.getElementById("cartToast");
   const msg = document.getElementById("toastMsg");
@@ -264,7 +245,6 @@ function mostrarToastCarrito(nombreProd, cantidad) {
   }, 4500);
 }
 
-// --- 8. GESTIÓN DEL CARRITO DE COMPRAS (OFFCANVAS) ---
 function agregarAlCarritoRapido(id) {
   const p = productos.find(x => x.id === id);
   if (!p) return;
@@ -343,7 +323,6 @@ function eliminarProducto(id) {
   }
 }
 
-// --- 9. MODAL DE DETALLE Y CARGA DE RESEÑAS DINÁMICAS ---
 function verDetalle(id) {
   const prod = productos.find(p => p.id === id);
   if (!prod) return;
@@ -357,14 +336,13 @@ function verDetalle(id) {
   document.getElementById("modalDetalleVendedor").textContent = prod.vendedor;
   document.getElementById("modalDetalleContacto").textContent = `Contacto: ${prod.contacto}`;
 
-  // Reseñas únicas pertenecientes a este producto exacto
   const contenedor = document.getElementById("contenedorReseñas");
   if (contenedor && prod.reseñas) {
     contenedor.innerHTML = prod.reseñas.map(r => `
       <div class="p-2 rounded bg-dark border border-secondary mb-2">
         <div class="d-flex align-items-center justify-content-between mb-1">
           <div class="d-flex align-items-center gap-2">
-            <img src="${r.avatar}" class="review-avatar" alt="${r.usuario}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+            <img src="${r.avatar}" class="review-avatar" alt="${r.usuario}" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
             <span class="small fw-bold text-white">${r.usuario}</span>
           </div>
           <div class="text-warning small">${'<i class="bi bi-star-fill"></i>'.repeat(r.rating)}</div>
@@ -378,7 +356,6 @@ function verDetalle(id) {
   if (modalEl) bootstrap.Modal.getOrCreateInstance(modalEl).show();
 }
 
-// --- 10. AUTENTICACIÓN Y PERSISTENCIA (LOCALSTORAGE) ---
 function obtenerUsuarioActivo() {
   try {
     const u = localStorage.getItem("nexustech_user");
@@ -395,16 +372,16 @@ function actualizarEstadoAuth() {
   if (user) {
     const inicial = user.usuario.charAt(0).toUpperCase();
     c.innerHTML = `
-      <div class="d-flex align-items-center gap-2" onclick="abrirPerfil()" style="cursor: pointer;">
-        <div class="rounded-circle bg-info text-dark d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 34px; height: 34px;">
+      <div class="d-flex align-items-center gap-1" onclick="abrirPerfil()" style="cursor: pointer;">
+        <div class="rounded-circle bg-info text-dark d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 30px; height: 30px; font-size: 0.85rem;">
           ${inicial}
         </div>
-        <span class="small fw-bold text-white d-none d-md-inline">${user.usuario}</span>
+        <span class="small fw-bold text-white d-none d-md-inline ms-1">${user.usuario}</span>
       </div>
     `;
   } else {
     c.innerHTML = `
-      <button class="btn btn-sm btn-outline-light d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalAuth">
+      <button class="btn btn-sm btn-outline-light btn-compact" data-bs-toggle="modal" data-bs-target="#modalAuth">
         <i class="bi bi-person-circle"></i> <span>Ingresar</span>
       </button>
     `;
@@ -424,9 +401,7 @@ function abrirPerfil() {
   if (m) bootstrap.Modal.getOrCreateInstance(m).show();
 }
 
-// --- 11. INICIALIZACIÓN DE EVENTOS Y FORMULARIOS ---
 document.addEventListener("DOMContentLoaded", () => {
-  // Asegurar sesión por defecto requerida para la defensa
   if (!localStorage.getItem("nexustech_user")) {
     localStorage.setItem("nexustech_user", JSON.stringify({
       usuario: "Andrés",
@@ -438,7 +413,6 @@ document.addEventListener("DOMContentLoaded", () => {
   actualizarCarrito();
   actualizarEstadoAuth();
 
-  // Búsqueda y Filtros reactivos
   const inpB = document.getElementById("inputBuscar");
   const selC = document.getElementById("selectCategoria");
   const rngP = document.getElementById("rangePrecio");
@@ -462,7 +436,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderizarCatalogo();
   });
 
-  // Modal Detalle Botones
   const btnAdd = document.getElementById("btnModalAddCart");
   const btnBuy = document.getElementById("btnModalBuyNow");
   if (btnAdd) {
@@ -488,7 +461,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Checkout Transaccional
   const fCheck = document.getElementById("formCheckout");
   if (fCheck) {
     fCheck.addEventListener("submit", (e) => {
@@ -497,13 +469,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const trackCode = "TRK-" + Math.floor(100000 + Math.random() * 900000);
       const mCheck = document.getElementById("modalCheckout");
       if (mCheck) bootstrap.Modal.getInstance(mCheck)?.hide();
-      alert(`¡PAGO PROCESADO EXITOSAMENTE!\n\nSe envió la confirmación a tu correo.\nCódigo de Envío: ${trackCode}\nProveedor: MasterTech SpA`);
+      alert(`¡PAGO PROCESADO EXITOSAMENTE!\n\nCódigo de Envío: ${trackCode}\nProveedor: MasterTech SpA`);
       carrito = [];
       actualizarCarrito();
     });
   }
 
-  // Publicar Nuevo Producto (was-validated)
   const fPub = document.getElementById("formNuevoProducto");
   if (fPub) {
     fPub.addEventListener("submit", (e) => {
@@ -523,7 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
         vendedor: document.getElementById("formVendedor").value.trim(),
         contacto: "contacto@mastertechg.com",
         reseñas: [
-          { usuario: "Comunidad UNAB", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80", rating: 5, texto: "Publicación reciente verificada en el marketplace." }
+          { usuario: "Comunidad UNAB", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80", rating: 5, texto: "Publicación reciente verificada." }
         ]
       };
       productos.unshift(nuevo);
@@ -533,29 +504,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (mPub) bootstrap.Modal.getInstance(mPub)?.hide();
       paginaActual = 1;
       renderizarCatalogo();
-    });
-  }
-
-  // Registro y Login
-  const fReg = document.getElementById("formRegistro");
-  if (fReg) {
-    fReg.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (!fReg.checkValidity()) {
-        e.stopPropagation();
-        fReg.classList.add("was-validated");
-        return;
-      }
-      const usuario = document.getElementById("regUsuario").value.trim();
-      const email = document.getElementById("regEmail").value.trim();
-      const password = document.getElementById("regPassword").value;
-      localStorage.setItem("nexustech_user", JSON.stringify({ usuario, email, password }));
-      fReg.reset();
-      fReg.classList.remove("was-validated");
-      const mAuth = document.getElementById("modalAuth");
-      if (mAuth) bootstrap.Modal.getInstance(mAuth)?.hide();
-      actualizarEstadoAuth();
-      mostrarToastCarrito(`¡Bienvenido, ${usuario}!`, 1);
     });
   }
 
