@@ -1,3 +1,4 @@
+/* colores que usamos en toda la pagina */
 :root {
   --nt-dark: #070b14;
   --nt-card-bg: #0d1527;
@@ -9,6 +10,7 @@
   --nt-text-muted: #cbd5e1;
 }
 
+/* fondo oscuro de la pagina */
 body {
   background-color: #090e1a;
   color: var(--nt-text-light);
@@ -16,7 +18,7 @@ body {
   min-height: 100vh;
 }
 
-/* NAVBAR FIJO QUE NO SE MUEVE AL SCROLLEAR */
+/* la barra de arriba fija para que no se mueva */
 .navbar-tech {
   background-color: var(--nt-dark) !important;
   border-bottom: 1px solid var(--nt-border);
@@ -27,11 +29,12 @@ body {
   z-index: 1050;
 }
 
-/* COMPENSACIÓN DEL NAVBAR FIJO */
+/* espacio para que la barra fija no tape el titulo */
 .main-page-wrapper {
   padding-top: 75px;
 }
 
+/* detalles del texto del logo */
 .brand-tech {
   font-weight: 800;
   letter-spacing: -0.5px;
@@ -46,14 +49,14 @@ body {
   font-weight: 700;
 }
 
-/* BOTONES DE ACCIÓN COMPACTOS */
+/* achicar los botones para que quepan bien */
 .btn-compact {
   font-size: 0.78rem !important;
   padding: 5px 8px !important;
   white-space: nowrap !important;
 }
 
-/* RESPONSIVE MÓVIL EXACTO Y CONTENIDO */
+/* acomodo especial para pantallas chicas de celular */
 @media (max-width: 991.98px) {
   .main-page-wrapper {
     padding-top: 70px;
@@ -80,7 +83,7 @@ body {
     margin-top: 6px;
   }
   
-  /* FILA CONTENIDA PARA QUE NADA SE SALGA DE LA PANTALLA */
+  /* ordenar la fila de botones para que el corazon no se salga de la pantalla */
   .mobile-actions-bar {
     display: flex !important;
     flex-direction: row !important;
@@ -98,7 +101,7 @@ body {
   }
 }
 
-/* INPUTS OSCUROS CON ALTO CONTRASTE */
+/* estilo oscuro para las cajas de texto y selects */
 .form-control, .form-select {
   background-color: #0b1324 !important;
   border: 1px solid #334155 !important;
@@ -116,7 +119,7 @@ body {
   font-weight: 500;
 }
 
-/* HERO SECTION */
+/* el degradado del fondo del mensaje de arriba */
 .hero-shopify {
   background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.1) 0%, rgba(7, 11, 20, 0.95) 75%),
               linear-gradient(180deg, #070b14 0%, #090e1a 100%);
@@ -124,7 +127,7 @@ body {
   padding: 30px 0 20px 0;
 }
 
-/* CARDS DE PRODUCTOS */
+/* estilo de las tarjetas de los productos */
 .card-shop {
   background-color: var(--nt-card-bg);
   border: 1px solid var(--nt-border);
@@ -132,6 +135,7 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   overflow: hidden;
 }
+/* efecto para que se levante un poquito al pasar el mouse */
 .card-shop:hover {
   transform: translateY(-4px);
   border-color: var(--nt-cyan);
@@ -156,7 +160,7 @@ body {
   transform: scale(1.05);
 }
 
-/* BOTONES */
+/* botones de colores personalizados */
 .btn-unab {
   background-color: var(--nt-unab-red);
   color: #fff;
@@ -184,7 +188,7 @@ body {
   border: 1px solid var(--nt-cyan);
 }
 
-/* MODALES Y OFFCANVAS */
+/* ventanas flotantes */
 .modal-content, .offcanvas {
   background-color: var(--nt-card-bg);
   color: #ffffff;
@@ -197,7 +201,7 @@ body {
   padding: 20px;
 }
 
-/* TOAST */
+/* cartelito flotante abajo a la derecha */
 .cart-floating-toast {
   position: fixed;
   bottom: 25px;
