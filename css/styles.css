@@ -13,9 +13,12 @@ body {
   background-color: #090e1a;
   color: var(--nt-text-light);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* NAVBAR */
+/* NAVBAR BASE */
 .navbar-tech {
   background-color: var(--nt-dark) !important;
   border-bottom: 1px solid var(--nt-border);
@@ -25,30 +28,72 @@ body {
   font-weight: 800;
   letter-spacing: -0.5px;
   color: #fff;
+  text-decoration: none;
 }
 .brand-tech span.accent {
   color: var(--nt-cyan);
 }
-.brand-tech .badge-unab {
+.badge-unab {
   background-color: var(--nt-unab-red);
   font-size: 0.65rem;
   letter-spacing: 0.5px;
-  vertical-align: middle;
+  font-weight: 700;
+  color: #fff;
 }
 
-/* INPUTS Y TEXTOS VISIBLES */
+/* RESPONSIVE NAVBAR: LOGO ARRIBA CON BADGE DEBAJO Y HAMBURGUESA A LA DERECHA */
+@media (max-width: 991.98px) {
+  .navbar-tech .container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand-tech {
+    max-width: 70%;
+  }
+  .navbar-toggler {
+    order: 1;
+    border-color: var(--nt-border) !important;
+    padding: 6px 10px;
+  }
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 210, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  }
+  .navbar-collapse {
+    order: 2;
+    width: 100%;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 210, 255, 0.15);
+    margin-top: 10px;
+  }
+  .mobile-actions-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* INPUTS Y FORMULARIOS DE ALTO CONTRASTE */
 .form-control, .form-select {
   background-color: #0b1324 !important;
   border: 1px solid #334155 !important;
   color: #ffffff !important;
 }
-
+.form-control:focus, .form-select:focus {
+  border-color: var(--nt-cyan) !important;
+  box-shadow: 0 0 0 0.25rem rgba(0, 210, 255, 0.25) !important;
+}
 .form-control::placeholder {
   color: #94a3b8 !important;
 }
-
-.form-label, .text-muted-custom {
+.form-label, label, .text-muted-custom {
   color: #cbd5e1 !important;
+  font-weight: 500;
 }
 
 /* HERO SECTION */
@@ -56,25 +101,27 @@ body {
   background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.1) 0%, rgba(7, 11, 20, 0.95) 75%),
               linear-gradient(180deg, #070b14 0%, #090e1a 100%);
   border-bottom: 1px solid var(--nt-border);
+  padding: 35px 0 25px 0;
 }
 
 /* TARJETAS DE PRODUCTO */
 .card-shop {
   background-color: var(--nt-card-bg);
   border: 1px solid var(--nt-border);
-  border-radius: 10px;
+  border-radius: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-
 .card-shop:hover {
   transform: translateY(-4px);
   border-color: var(--nt-cyan);
   box-shadow: 0 10px 24px rgba(0, 210, 255, 0.15);
 }
-
 .card-shop-img-wrapper {
-  height: 200px;
+  height: 190px;
   background: #050811;
   display: flex;
   align-items: center;
@@ -82,19 +129,17 @@ body {
   overflow: hidden;
   position: relative;
 }
-
 .card-shop-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
-
 .card-shop:hover .card-shop-img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
-/* BOTONES */
+/* BOTONES PERSONALIZADOS */
 .btn-unab {
   background-color: var(--nt-unab-red);
   color: #fff;
@@ -105,7 +150,6 @@ body {
   background-color: var(--nt-unab-hover);
   color: #fff;
 }
-
 .btn-cyan {
   background-color: var(--nt-cyan);
   color: #070b14;
@@ -116,7 +160,6 @@ body {
   background-color: #33dcff;
   color: #070b14;
 }
-
 .badge-stock {
   font-size: 0.7rem;
   background: rgba(0, 210, 255, 0.15);
@@ -130,51 +173,54 @@ body {
   color: #ffffff;
   border: 1px solid var(--nt-border);
 }
+.modal-header, .offcanvas-header {
+  border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+}
+.modal-footer {
+  border-top: 1px solid rgba(0, 210, 255, 0.2);
+}
 
-/* TOAST FLOTANTE DEL CARRITO */
+/* SIDEBAR DE FILTROS */
+.sidebar-filter {
+  background-color: var(--nt-card-bg);
+  border: 1px solid var(--nt-border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* TOAST FLOTANTE */
 .cart-floating-toast {
   position: fixed;
   bottom: 25px;
   right: 25px;
-  z-index: 1080;
+  z-index: 1090;
   background: #0f172a;
   border: 1px solid var(--nt-cyan);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
   border-radius: 50px;
-  padding: 10px 20px;
+  padding: 10px 22px;
   display: none;
   align-items: center;
   gap: 15px;
   animation: slideUp 0.3s ease;
 }
-
+.cart-floating-toast.show {
+  display: flex !important;
+}
 @keyframes slideUp {
-  from { transform: translateY(100px); opacity: 0; }
+  from { transform: translateY(80px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
-.review-avatar {
-  width: 42px;
-  height: 42px;
+.user-avatar-badge {
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--nt-cyan);
-}
-
-/* FORZAR CONTRASTE ALTO */
-.form-label, 
-label, 
-.text-muted-custom, 
-aside span, 
-aside div {
-  color: #ffffff !important;
-  font-weight: 500;
-}
-
-#cartToast {
-  display: none !important;
-}
-
-#cartToast.show {
-  display: flex !important;
+  background-color: var(--nt-cyan);
+  color: #070b14;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }

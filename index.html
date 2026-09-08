@@ -1,170 +1,170 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusTech Store | Marketplace de Soluciones & Hardware</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusTech Store | Campus Hub UNAB</title>
   
-  <!-- Favicon SVG Integrado -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23070b14'/%3E%3Crect x='6' y='6' width='20' height='20' rx='3' fill='%230d1527' stroke='%2300d2ff' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2300d2ff'/%3E%3Cpath d='M16 2v4M16 26v4M2 16h4M26 16h4' stroke='%2300d2ff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
-
-  <!-- Bootstrap 5.3 CSS & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <!-- Estilos Propios -->
-  <link rel="stylesheet" href="css/styles.css">
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- CSS Personalizado Modular -->
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <!-- NAVBAR ESTILO SHOPIFY / TECH -->
+  <!-- NAVBAR TECNOLÓGICO CON RESPONSIVE REFINADO -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-tech sticky-top py-2">
-    <div class="container-fluid px-3 px-lg-5">
-      <a class="navbar-brand brand-tech d-flex align-items-center gap-2" href="#">
-        <i class="bi bi-motherboard text-info fs-3"></i>
-        <span>NEXUS<span class="accent">TECH</span></span>
-        <span class="badge badge-unab rounded-pill ms-1">CAMPUS HUB</span>
+    <div class="container-fluid px-3 px-lg-4">
+      
+      <!-- LOGO: NEXUSTECH CON CAMPUS HUB DEBAJO -->
+      <a class="navbar-brand brand-tech d-flex flex-column align-items-start m-0 p-0" href="#">
+        <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-microchip text-info fs-4"></i>
+          <span class="fs-4 fw-bold">NEXUS<span class="accent">TECH</span></span>
+        </div>
+        <span class="badge badge-unab rounded-pill px-2 py-0 mt-1">CAMPUS HUB</span>
       </a>
 
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+      <!-- BOTÓN HAMBURGUESA ALINEADO A LA DERECHA -->
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTechContent" aria-controls="navbarTechContent" aria-expanded="false" aria-label="Navegación">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse mt-2 mt-lg-0" id="menuPrincipal">
-        <div class="mx-lg-auto my-2 my-lg-0 w-100" style="max-width: 520px;">
+      <!-- CONTENIDO COLAPSABLE -->
+      <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarTechContent">
+        
+        <!-- BUSCADOR GLOBAL -->
+        <div class="d-flex my-2 my-lg-0 mx-lg-auto w-100 w-lg-50" style="max-width: 520px;">
           <div class="input-group">
-            <span class="input-group-text bg-dark border-secondary text-info"><i class="bi bi-search"></i></span>
-            <input id="inputBuscar" class="form-control border-secondary" type="search" placeholder="Buscar entre más de 2.000 productos y componentes...">
+            <span class="input-group-text bg-dark border-secondary text-info"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" id="buscadorInput" class="form-control" placeholder="Buscar entre más de 2.000 productos y componentes..." />
           </div>
         </div>
 
-        <ul class="navbar-nav ms-auto align-items-center gap-2">
-          <li class="nav-item w-100 w-lg-auto">
-            <button class="btn btn-outline-info btn-sm w-100 d-flex align-items-center justify-content-center gap-1" data-bs-toggle="modal" data-bs-target="#modalNuevoProducto">
-              <i class="bi bi-plus-lg"></i> Publicar Ítem
-            </button>
-          </li>
-          <li class="nav-item">
-            <button id="btnFavoritos" class="btn btn-dark position-relative text-white border-secondary">
-              <i class="bi bi-heart-fill text-danger"></i>
-              <span id="badgeFavoritos" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
-            </button>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-cyan position-relative d-flex align-items-center gap-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
-              <i class="bi bi-bag-check-fill"></i>
-              <span>Carro</span>
-              <span id="badgeCarrito" class="badge bg-dark text-info rounded-pill">0</span>
-            </button>
-          </li>
-          <!-- BOTÓN / AVATAR DE USUARIO -->
-          <li class="nav-item ms-lg-2" id="contenedorAuthNav">
-            <button id="btnAbrirLogin" class="btn btn-sm btn-outline-light d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#modalAuth">
-              <i class="bi bi-person-circle"></i> <span>Ingresar</span>
-            </button>
-          </li>
-        </ul>
+        <!-- ACCIONES RÁPIDAS (MOBILE ADAPTADO) -->
+        <div class="mobile-actions-bar mt-2 mt-lg-0 d-flex align-items-center justify-content-lg-end gap-2">
+          <button class="btn btn-outline-info btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#modalPublicar">
+            <i class="fa-solid fa-plus me-1"></i> Publicar Ítem
+          </button>
+
+          <button class="btn btn-dark border-secondary btn-sm position-relative text-danger px-3" title="Favoritos">
+            <i class="fa-solid fa-heart"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">0</span>
+          </button>
+
+          <button class="btn btn-cyan btn-sm fw-bold d-flex align-items-center gap-2 px-3" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+            <i class="fa-solid fa-lock"></i> Carro <span class="badge bg-dark text-cyan rounded-pill" id="cartBadgeCount">0</span>
+          </button>
+
+          <!-- CONTENEDOR DE SESIÓN / AVATAR -->
+          <div id="userNavContainer" class="d-flex align-items-center">
+            <!-- Render dinámico: "Ingresar" o "Avatar A Andrés" -->
+          </div>
+        </div>
+
       </div>
     </div>
   </nav>
 
-  <!-- HERO BANNER -->
-  <header class="hero-shopify py-4 text-center">
+  <!-- HERO SECTION -->
+  <section class="hero-shopify text-center">
     <div class="container py-2">
-      <span class="badge rounded-pill border border-info text-info mb-2 px-3 py-1 fw-bold">CATÁLOGO GENERAL DE COMERCIO ACTIVO</span>
-      <h1 class="h3 fw-bold text-white mb-2">Tecnología que resuelve problemas reales</h1>
-      <p class="text-muted-custom small mb-0">E-commerce de alto rendimiento con más de 2.000 referencias de hardware certificado y soluciones técnicas.</p>
+      <div class="d-inline-block px-3 py-1 mb-2 rounded-pill border border-info" style="background: rgba(0, 210, 255, 0.08);">
+        <span class="text-info text-uppercase fw-bold" style="font-size: 0.75rem; letter-spacing: 1px;">Catálogo General de Comercio Activo</span>
+      </div>
+      <h1 class="display-6 fw-bold text-white mb-2">Tecnología que resuelve problemas reales</h1>
+      <p class="text-muted-custom mx-auto mb-0" style="max-width: 680px; font-size: 0.95rem;">
+        E-commerce de alto rendimiento con más de 2.000 referencias de hardware certificado y soluciones técnicas.
+      </p>
     </div>
-  </header>
+  </section>
 
-  <div class="container mt-3">
-    <div id="contenedorAlertas"></div>
-  </div>
-
-  <!-- CATÁLOGO PRINCIPAL -->
-  <main class="container my-4">
+  <!-- CONTENIDO PRINCIPAL: SIDEBAR + CATÁLOGO -->
+  <main class="container-fluid px-3 px-lg-4 py-4 flex-grow-1">
     <div class="row g-4">
       
-      <!-- SIDEBAR FILTROS -->
-      <aside class="col-lg-3">
-        <div class="card card-shop p-3 sticky-top" style="top: 80px;">
-          <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary pb-2">
-            <span class="fw-bold text-info"><i class="bi bi-sliders me-1"></i> Parámetros</span>
-            <button id="btnLimpiarFiltros" class="btn btn-link btn-sm text-decoration-none text-info p-0">Resetear</button>
+      <!-- ASIDE: FILTROS LATERALES -->
+      <aside class="col-12 col-lg-3">
+        <div class="sidebar-filter">
+          <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2 border-secondary">
+            <h5 class="m-0 text-info fw-bold"><i class="fa-solid fa-sliders me-2"></i>Parámetros</h5>
+            <button class="btn btn-link text-info text-decoration-none p-0 btn-sm" id="btnResetFiltros">Resetear</button>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label small text-muted-custom text-uppercase fw-semibold">Línea de Producto</label>
-            <select id="selectCategoria" class="form-select form-select-sm">
-              <option value="todas">Inventario Completo (2.400 ítems)</option>
-              <option value="Workstations">Laptops & Workstations</option>
-              <option value="Hardware">Componentes & GPUs</option>
-              <option value="Periféricos">Audio & Periféricos</option>
-              <option value="Soluciones">Integraciones & Cloud</option>
+          <!-- LÍNEA DE PRODUCTO -->
+          <div class="mb-4">
+            <label class="form-label small text-uppercase fw-bold">Línea de Producto</label>
+            <select class="form-select" id="selectCategoria">
+              <option value="ALL">Inventario Completo (2.400 ítems)</option>
+              <option value="Periféricos">Periféricos de Audio & Entrada</option>
+              <option value="Workstations">Workstations & Laptops Pro</option>
+              <option value="Servidores">Servidores & Rackmounts</option>
+              <option value="Componentes">Componentes & GPUs</option>
+              <option value="Soluciones">Soluciones & Software</option>
             </select>
           </div>
 
-          <div class="mb-3">
+          <!-- RANGO DE PRESUPUESTO -->
+          <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-1">
-              <label class="form-label small text-muted-custom text-uppercase fw-semibold mb-0">Presupuesto Máximo</label>
-              <span id="labelPrecioMax" class="fw-bold text-info small">$2.500.000</span>
+              <label class="form-label small text-uppercase fw-bold m-0">Presupuesto Máximo</label>
+              <span class="text-info fw-bold" id="labelPresupuesto">$2.500.000</span>
             </div>
-            <input type="range" class="form-range" id="rangePrecio" min="20000" max="2500000" step="20000" value="2500000">
+            <input type="range" class="form-range" id="rangePresupuesto" min="50000" max="2500000" step="50000" value="2500000">
           </div>
 
-          <div class="p-2 rounded bg-dark border border-secondary small text-light mt-2">
-            <i class="bi bi-shield-lock-fill text-info me-1"></i> Inspección técnica según estándares de arquitectura web.
+          <!-- INFO TÉCNICA -->
+          <div class="p-2 rounded bg-dark border border-secondary small text-muted-custom">
+            <i class="fa-solid fa-shield-halved text-info me-1"></i> Inspección técnica según estándares de arquitectura web.
           </div>
         </div>
       </aside>
 
-      <!-- FEED DE PRODUCTOS -->
-      <section class="col-lg-9">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <span id="contadorProductos" class="text-light small fw-semibold">Cargando catálogo...</span>
+      <!-- SECTION: GRILLA DE PRODUCTOS + PAGINACIÓN -->
+      <section class="col-12 col-lg-9">
+        
+        <!-- HEADER DEL CATÁLOGO & PAGINADOR -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between mb-3 gap-2 bg-dark p-2 px-3 rounded border border-secondary">
+          <div class="small text-muted-custom" id="contadorResultados">
+            Mostrando 24 de 2400 productos (Página 1 de 100)
+          </div>
           <div class="d-flex align-items-center gap-2">
             <span class="small text-muted-custom">Páginas:</span>
-            <div id="paginadorBotones" class="btn-group btn-group-sm"></div>
+            <button class="btn btn-outline-secondary btn-sm py-0 px-2 text-white" id="btnPagPrev">Prev</button>
+            <span class="text-info fw-bold small" id="indicadorPagina">1 / 100</span>
+            <button class="btn btn-outline-secondary btn-sm py-0 px-2 text-white" id="btnPagNext">Sig</button>
           </div>
         </div>
 
-        <div id="grillaProductos" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3"></div>
-
-        <div class="d-flex justify-content-center mt-4">
-          <div id="paginadorInferior" class="btn-group"></div>
+        <!-- GRILLA DE PRODUCTOS -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3" id="catalogoGrid">
+          <!-- Renderizado dinámico desde js/main.js -->
         </div>
-      </section>
 
+      </section>
     </div>
   </main>
 
-  <!-- TOAST FLOTANTE DEL CARRITO -->
-  <div id="cartToast" class="cart-floating-toast">
-    <div class="d-flex align-items-center gap-2">
-      <i class="bi bi-cart-check-fill text-info fs-4"></i>
-      <div>
-        <div class="small fw-bold text-white mb-0" id="toastMsg">Producto añadido</div>
-        <div class="text-info small" id="toastSub">Total en carro: 0 ítems</div>
+  <!-- OFFCANVAS: CARRITO LATERAL INTERACTIVO -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title text-info fw-bold" id="cartOffcanvasLabel">
+        <i class="fa-solid fa-cart-shopping me-2"></i>Orden de Compra
+      </h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between">
+      <div id="cartItemsList" class="d-flex flex-column gap-2 overflow-auto" style="max-height: 65vh;">
+        <!-- Ítems del carro renderizados con JS -->
       </div>
-    </div>
-    <button class="btn btn-cyan btn-sm rounded-pill px-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
-      Ver Carro
-    </button>
-  </div>
-
-  <!-- OFFCANVAS: CARRO DE COMPRAS -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
-    <div class="offcanvas-header border-bottom border-secondary">
-      <h5 class="offcanvas-title fw-bold text-info"><i class="bi bi-cart3 me-2"></i>Orden de Compra</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-toggle="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body d-flex flex-column">
-      <div id="listaCarrito" class="flex-grow-1 overflow-auto mb-3"></div>
-      <div class="border-top border-secondary pt-3">
+      <div class="border-top border-secondary pt-3 mt-3">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-muted-custom">Subtotal:</span>
-          <span id="totalCarrito" class="h4 mb-0 fw-bold text-info">$0</span>
+          <span class="fs-5 text-white">Subtotal:</span>
+          <span class="fs-4 fw-bold text-info" id="cartSubtotal">$0</span>
         </div>
-        <button id="btnAbrirCheckout" class="btn btn-unab w-100 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#modalCheckout">
+        <button class="btn btn-unab w-100 py-2 fw-bold" id="btnProcederCheckout" data-bs-toggle="modal" data-bs-target="#modalCheckout">
           Proceder al Pago
         </button>
       </div>
@@ -172,119 +172,128 @@
   </div>
 
   <!-- MODAL: DETALLE DE PRODUCTO Y RESEÑAS -->
-  <div class="modal fade" id="modalDetalle" tabindex="-1">
+  <div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header border-secondary">
-          <h5 id="modalDetalleTitulo" class="modal-title fw-bold text-white">Ficha de Producto</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-toggle="modal"></button>
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-white" id="detalleTitulo">Audífonos Reference DAC Studio (Lote #10025)</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="row g-4">
-            <div class="col-md-6">
-              <img id="modalDetalleImg" src="" class="img-fluid rounded mb-2 w-100" style="max-height: 280px; object-fit: cover;" alt="Producto">
-              <div class="p-3 rounded bg-dark border border-secondary mt-3">
-                <div class="small text-info fw-bold text-uppercase mb-1"><i class="bi bi-shield-check me-1"></i> Despachador Oficial</div>
-                <div class="fw-semibold text-white" id="modalDetalleVendedor"></div>
-                <div class="small text-muted-custom" id="modalDetalleContacto"></div>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <img id="detalleImg" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600" class="img-fluid rounded border border-secondary" alt="Producto">
+              <div class="mt-2 p-2 rounded bg-dark border border-secondary small">
+                <span class="text-info fw-bold"><i class="fa-solid fa-certificate me-1"></i>DESPACHADOR OFICIAL</span>
+                <div id="detalleVendedor" class="text-white">AudioTech Labs</div>
+                <div class="text-muted-custom">Contacto: contacto@mastertechg.com</div>
               </div>
             </div>
-            <div class="col-md-6 d-flex flex-column">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="badge bg-dark border border-secondary text-info" id="modalDetalleCat"></span>
-                <div class="text-warning small" id="modalDetalleStars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i> (4.8/5)
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="badge badge-stock" id="detalleCategoria">Periféricos</span>
+                  <span class="text-warning small"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> (4.8/5)</span>
+                </div>
+                <h3 class="fw-bold text-info mb-2" id="detallePrecio">$146.175</h3>
+                <p class="small text-muted-custom" id="detalleDesc">
+                  Solución técnica certificada para despliegue productivo y alto rendimiento. Testeada en laboratorio local.
+                </p>
+
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <label class="form-label small">Cantidad</label>
+                    <select class="form-select form-select-sm" id="detalleCantidad">
+                      <option value="1">1 unidad</option>
+                      <option value="2">2 unidades</option>
+                      <option value="3">3 unidades</option>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label small">Acabado / Color</label>
+                    <select class="form-select form-select-sm" id="detalleAcabado">
+                      <option value="Gris Espacial">Gris Espacial</option>
+                      <option value="Negro Mate">Negro Mate</option>
+                      <option value="Plata Titanio">Plata Titanio</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-              <h4 class="h4 text-info fw-bold mb-2" id="modalDetallePrecio"></h4>
-              <p id="modalDetalleDesc" class="text-light small mb-3"></p>
 
-              <div class="row g-2 mb-3">
-                <div class="col-6">
-                  <label class="form-label small text-muted-custom">Cantidad</label>
-                  <select id="modalSelectCantidad" class="form-select form-select-sm">
-                    <option value="1">1 unidad</option>
-                    <option value="2">2 unidades</option>
-                    <option value="3">3 unidades</option>
-                    <option value="5">5 unidades</option>
-                  </select>
-                </div>
-                <div class="col-6">
-                  <label class="form-label small text-muted-custom">Acabado / Color</label>
-                  <select id="modalSelectColor" class="form-select form-select-sm">
-                    <option value="Espacial">Gris Espacial</option>
-                    <option value="Grafito">Negro Grafito</option>
-                    <option value="Plata">Plata Platino</option>
-                    <option value="Titanio">Titanio Mate</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="d-grid gap-2 mt-auto">
-                <button id="btnModalAddCart" type="button" class="btn btn-cyan fw-bold">
-                  <i class="bi bi-cart-plus-fill me-1"></i> Añadir al Carrito
-                </button>
-                <button id="btnModalBuyNow" type="button" class="btn btn-unab fw-bold">
-                  <i class="bi bi-lightning-charge-fill me-1"></i> Comprar Ahora
-                </button>
+              <div class="d-flex flex-column gap-2 mt-3">
+                <button class="btn btn-cyan fw-bold py-2" id="btnModalAddCart"><i class="fa-solid fa-cart-plus me-1"></i> Añadir al Carrito</button>
+                <button class="btn btn-unab fw-bold py-2" id="btnModalComprarAhora"><i class="fa-solid fa-bolt me-1"></i> Comprar Ahora</button>
               </div>
             </div>
           </div>
 
-          <div class="border-top border-secondary mt-4 pt-3">
-            <h6 class="fw-bold text-white mb-3"><i class="bi bi-chat-square-text-fill text-info me-2"></i>Reseñas y Experiencias de Compradores Verificados</h6>
-            <div id="contenedorReseñas" class="d-flex flex-column gap-2"></div>
+          <!-- RESEÑAS VERIFICADAS -->
+          <div class="border-top border-secondary pt-3 mt-4">
+            <h6 class="text-info fw-bold mb-3"><i class="fa-solid fa-comments me-2"></i>Reseñas y Experiencias de Compradores Verificados</h6>
+            <div class="d-flex flex-column gap-2">
+              <div class="p-2 rounded bg-dark border border-secondary d-flex gap-3 align-items-center">
+                <div class="user-avatar-badge" style="width:36px; height:36px; font-size: 0.8rem;">CR</div>
+                <div>
+                  <div class="d-flex align-items-center gap-2">
+                    <strong class="text-white small">Camila Rojas</strong>
+                    <span class="text-warning small"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                  </div>
+                  <p class="small text-muted-custom m-0">Excelente producto, entrega rápida en sede Viña del Mar.</p>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: CHECKOUT / PASARELA DE PAGO -->
-  <div class="modal fade" id="modalCheckout" tabindex="-1">
+  <!-- MODAL: CHECKOUT & PASARELA DE PAGO -->
+  <div class="modal fade" id="modalCheckout" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header border-secondary bg-dark">
-          <h5 class="modal-title fw-bold text-white"><i class="bi bi-credit-card-2-front text-info me-2"></i>Checkout & Despacho Seguro</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-toggle="modal"></button>
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-white"><i class="fa-solid fa-credit-card text-info me-2"></i>Checkout & Despacho Seguro</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="formCheckout" novalidate>
-          <div class="modal-body">
-            <div class="mb-2">
-              <label class="form-label small fw-semibold text-muted-custom">Dirección de Despacho *</label>
-              <input type="text" class="form-control form-control-sm" required placeholder="Ej. Calle 1 Norte 1234, Depto 402" value="Av. Bosques de Montemar 320">
+          <div class="modal-body d-flex flex-column gap-3">
+            <div>
+              <label class="form-label small">Dirección de Despacho *</label>
+              <input type="text" class="form-control" required placeholder="Av. Bosques de Montemar 320" value="Av. Bosques de Montemar 320">
+              <div class="invalid-feedback">Por favor indique una dirección.</div>
             </div>
-            <div class="row g-2 mb-2">
-              <div class="col-6">
-                <label class="form-label small fw-semibold text-muted-custom">Ciudad / Comuna *</label>
-                <input type="text" class="form-control form-control-sm" required placeholder="Viña del Mar" value="Viña del Mar">
+            <div class="row g-2">
+              <div class="col-7">
+                <label class="form-label small">Ciudad / Comuna *</label>
+                <input type="text" class="form-control" required placeholder="Viña del Mar" value="Viña del Mar">
               </div>
-              <div class="col-6">
-                <label class="form-label small fw-semibold text-muted-custom">Código Postal *</label>
-                <input type="text" class="form-control form-control-sm" required placeholder="2520000" value="2520000">
-              </div>
-            </div>
-            <hr class="border-secondary my-2">
-            <div class="mb-2">
-              <label class="form-label small fw-semibold text-muted-custom">Número de Tarjeta (Cualquiera) *</label>
-              <input type="text" class="form-control form-control-sm" required placeholder="4532 8900 1234 5678" value="4532 8900 1234 5678">
-            </div>
-            <div class="row g-2 mb-3">
-              <div class="col-6">
-                <label class="form-label small fw-semibold text-muted-custom">Vencimiento (MM/AA) *</label>
-                <input type="text" class="form-control form-control-sm" required placeholder="12/28" value="12/28">
-              </div>
-              <div class="col-6">
-                <label class="form-label small fw-semibold text-muted-custom">CVV / CVC *</label>
-                <input type="password" class="form-control form-control-sm" required placeholder="789" maxlength="4" value="789">
+              <div class="col-5">
+                <label class="form-label small">Código Postal *</label>
+                <input type="text" class="form-control" required placeholder="2520000" value="2520000">
               </div>
             </div>
-            <div class="p-2 bg-dark rounded border border-secondary d-flex justify-content-between align-items-center">
-              <span class="small text-muted-custom">Total a facturar:</span>
-              <span id="checkoutTotalMonto" class="fw-bold text-info h5 mb-0">$0</span>
+            <div>
+              <label class="form-label small">Número de Tarjeta (Cualquiera) *</label>
+              <input type="text" class="form-control" required placeholder="4532 8900 1234 5678" value="4532 8900 1234 5678">
+            </div>
+            <div class="row g-2">
+              <div class="col-6">
+                <label class="form-label small">Vencimiento (MM/AA) *</label>
+                <input type="text" class="form-control" required placeholder="12/28" value="12/28">
+              </div>
+              <div class="col-6">
+                <label class="form-label small">CVV / CVC *</label>
+                <input type="password" maxlength="3" class="form-control" required placeholder="..." value="123">
+              </div>
+            </div>
+            <div class="p-3 bg-dark border border-secondary rounded d-flex justify-content-between align-items-center">
+              <span class="text-white">Total a facturar:</span>
+              <span class="fs-4 fw-bold text-info" id="checkoutTotalFacturar">$0</span>
             </div>
           </div>
-          <div class="modal-footer border-secondary">
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-cyan btn-sm fw-bold px-4">Pagar Ahora</button>
           </div>
@@ -293,163 +302,116 @@
     </div>
   </div>
 
-  <!-- MODAL: LOGIN Y CREAR CUENTA -->
-  <div class="modal fade" id="modalAuth" tabindex="-1">
+  <!-- MODAL: REGISTRAR PUBLICACIÓN -->
+  <div class="modal fade" id="modalPublicar" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header border-secondary bg-dark">
-          <ul class="nav nav-pills" id="authTabs" role="tablist">
-            <li class="nav-item">
-              <button class="nav-link active btn-sm text-white" id="tab-login-btn" data-bs-toggle="pill" data-bs-target="#tabLogin" type="button">Iniciar Sesión</button>
-            </li>
-            <li class="nav-item">
-              <button class="nav-link btn-sm text-white" id="tab-registro-btn" data-bs-toggle="pill" data-bs-target="#tabRegistro" type="button">Crear Cuenta</button>
-            </li>
-          </ul>
-          <button type="button" class="btn-close btn-close-white" data-bs-toggle="modal"></button>
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-white"><i class="fa-solid fa-microchip text-info me-2"></i>Registrar Publicación</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div class="tab-content" id="authTabsContent">
-            
-            <div class="tab-pane fade show active" id="tabLogin">
-              <form id="formLogin" novalidate>
-                <div class="mb-3">
-                  <label class="form-label small text-muted-custom">Correo o Usuario</label>
-                  <input type="text" id="loginUsuario" class="form-control form-control-sm" required placeholder="tu_usuario o correo">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label small text-muted-custom">Contraseña</label>
-                  <input type="password" id="loginPassword" class="form-control form-control-sm" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn-cyan btn-sm w-100 fw-bold py-2">Ingresar a NexusTech</button>
-              </form>
+        <form id="formPublicar" novalidate>
+          <div class="modal-body d-flex flex-column gap-3">
+            <div>
+              <label class="form-label small">Nombre del Ítem / Hardware *</label>
+              <input type="text" class="form-control" id="pubNombre" required placeholder="Ej. GPU Nvidia RTX 4080 16GB">
+              <div class="invalid-feedback">Indique un nombre descriptivo.</div>
             </div>
-
-            <div class="tab-pane fade" id="tabRegistro">
-              <form id="formRegistro" novalidate>
-                <div class="mb-2">
-                  <label class="form-label small text-muted-custom">Nombre de Usuario *</label>
-                  <input type="text" id="regUsuario" class="form-control form-control-sm" required minlength="3" placeholder="Ej. AndresTech">
-                </div>
-                <div class="mb-2">
-                  <label class="form-label small text-muted-custom">Correo Electrónico *</label>
-                  <input type="email" id="regEmail" class="form-control form-control-sm" required placeholder="andres@ejemplo.com">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label small text-muted-custom">Contraseña (Mínimo 6 caracteres) *</label>
-                  <input type="password" id="regPassword" class="form-control form-control-sm" required minlength="6" placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn-unab btn-sm w-100 fw-bold py-2">Registrarme</button>
-              </form>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: PERFIL DE USUARIO Y BENEFICIOS -->
-  <div class="modal fade" id="modalPerfil" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header border-secondary bg-dark">
-          <h5 class="modal-title fw-bold text-white"><i class="bi bi-person-badge-fill text-info me-2"></i>Mi Perfil & Beneficios</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-toggle="modal"></button>
-        </div>
-        <div class="modal-body text-center">
-          <div id="perfilAvatarCirculo" class="rounded-circle bg-info text-dark d-inline-flex align-items-center justify-content-center fw-bold fs-3 mb-3 shadow" style="width: 70px; height: 70px;">
-            A
-          </div>
-          <h5 id="perfilNombreUsuario" class="fw-bold text-white mb-0">Usuario</h5>
-          <p id="perfilEmail" class="small text-muted-custom mb-3">correo@ejemplo.com</p>
-
-          <div class="card bg-dark border-secondary p-3 text-start mb-3">
-            <h6 class="small fw-bold text-info text-uppercase mb-2"><i class="bi bi-gift-fill me-1"></i> Beneficios Activos (Nivel Pro)</h6>
-            <ul class="list-unstyled small mb-0 d-flex flex-column gap-1 text-light">
-              <li><i class="bi bi-check-circle-fill text-success me-2"></i>Despacho gratis express en toda la V Región.</li>
-              <li><i class="bi bi-check-circle-fill text-success me-2"></i>15% de descuento en módulos de integración.</li>
-              <li><i class="bi bi-check-circle-fill text-success me-2"></i>Prioridad de soporte técnico 24/7 MasterTech.</li>
-            </ul>
-          </div>
-
-          <button id="btnCerrarSesion" class="btn btn-outline-danger btn-sm w-100">
-            <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: PUBLICAR NUEVO PRODUCTO -->
-  <div class="modal fade" id="modalNuevoProducto" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header border-secondary">
-          <h5 class="modal-title fw-bold text-white"><i class="bi bi-cpu text-info me-2"></i>Registrar Publicación</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-toggle="modal"></button>
-        </div>
-        <form id="formNuevoProducto" novalidate>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label small fw-semibold text-muted-custom">Nombre del Ítem / Hardware *</label>
-              <input type="text" class="form-control" id="formNombre" required minlength="4" placeholder="Ej. GPU Nvidia RTX 4080 16GB">
-              <div class="invalid-feedback">Indica al menos 4 caracteres.</div>
-            </div>
-            <div class="row g-2 mb-3">
-              <div class="col-md-6">
-                <label class="form-label small fw-semibold text-muted-custom">Precio Unitario (CLP) *</label>
-                <input type="number" class="form-control" id="formPrecio" required min="1000" placeholder="Ej. 650000">
-                <div class="invalid-feedback">Mínimo $1.000.</div>
+            <div class="row g-2">
+              <div class="col-6">
+                <label class="form-label small">Precio Unitario (CLP) *</label>
+                <input type="number" min="1000" class="form-control" id="pubPrecio" required placeholder="Ej. 650000">
+                <div class="invalid-feedback">Monto válido requerido.</div>
               </div>
-              <div class="col-md-6">
-                <label class="form-label small fw-semibold text-muted-custom">Línea Técnica *</label>
-                <select class="form-select" id="formCategoria" required>
+              <div class="col-6">
+                <label class="form-label small">Línea Técnica *</label>
+                <select class="form-select" id="pubCategoria" required>
                   <option value="">Elegir...</option>
-                  <option value="Workstations">Workstations</option>
-                  <option value="Hardware">Hardware</option>
+                  <option value="Componentes">Componentes</option>
                   <option value="Periféricos">Periféricos</option>
+                  <option value="Workstations">Workstations</option>
+                  <option value="Servidores">Servidores</option>
                   <option value="Soluciones">Soluciones</option>
                 </select>
-                <div class="invalid-feedback">Selecciona una línea.</div>
+                <div class="invalid-feedback">Seleccione categoría.</div>
               </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label small fw-semibold text-muted-custom">Enlace Fotografía (Opcional)</label>
-              <input type="url" class="form-control" id="formImg" placeholder="https://images.unsplash.com/...">
+            <div>
+              <label class="form-label small">Enlace Fotografía (Opcional)</label>
+              <input type="url" class="form-control" id="pubImg" placeholder="https://images.unsplash.com/...">
             </div>
-            <div class="mb-3">
-              <label class="form-label small fw-semibold text-muted-custom">Ficha Técnica & Estado *</label>
-              <textarea class="form-control" id="formDesc" rows="2" required minlength="10" placeholder="Rendimiento térmico, ciclos de uso, specs..."></textarea>
-              <div class="invalid-feedback">Mínimo 10 caracteres requeridos.</div>
+            <div>
+              <label class="form-label small">Ficha Técnica & Estado *</label>
+              <textarea class="form-control" id="pubDesc" rows="2" required placeholder="Rendimiento térmico, ciclos de uso, specs..."></textarea>
             </div>
-            <div class="mb-2">
-              <label class="form-label small fw-semibold text-muted-custom">Responsable / Entidad *</label>
-              <input type="text" class="form-control" id="formVendedor" required placeholder="Ej. NexusTech SpA / Particular">
-              <div class="invalid-feedback">Ingresa el contacto responsable.</div>
+            <div>
+              <label class="form-label small">Responsable / Entidad *</label>
+              <input type="text" class="form-control" id="pubVendedor" required placeholder="Ej. NexusTech SpA / Particular" value="Andrés Olguín (Campus)">
             </div>
           </div>
-          <div class="modal-footer border-secondary">
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-cyan btn-sm px-4">Lanzar Publicación</button>
+            <button type="submit" class="btn btn-cyan btn-sm fw-bold px-4">Lanzar Publicación</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="py-4 mt-5 border-top border-secondary text-center small text-light" style="background-color: var(--nt-dark);">
-    <div class="container">
-      <p class="mb-1 text-white fw-bold">NexusTech Commerce · Soluciones Digitales & Hardware Certificado</p>
-      <p class="mb-1 text-muted-custom">Viña del Mar, Chile | Sede Universitaria UNAB | contacto@mastertechg.com</p>
-      <p class="mb-0 text-secondary">Desarrollo Web y Móvil · Taller Evaluado 1 Frontend (2026)</p>
+  <!-- MODAL: AUTH / PERFIL -->
+  <div class="modal fade" id="modalAuth" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-white"><i class="fa-solid fa-user-shield text-info me-2"></i>Gestión de Acceso</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="authLoginForm">
+            <div class="mb-3">
+              <label class="form-label small">Correo o Usuario</label>
+              <input type="text" class="form-control" id="authUsuarioInput" placeholder="tu_usuario o correo" value="Andrés">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small">Contraseña</label>
+              <input type="password" class="form-control" value="password123">
+            </div>
+            <button class="btn btn-cyan w-100 fw-bold py-2" id="btnIniciarSesion">Ingresar a NexusTech</button>
+          </div>
+          <div id="authProfileView" style="display: none;">
+            <div class="text-center py-3">
+              <div class="user-avatar-badge mb-2" style="width: 60px; height: 60px; font-size: 1.5rem;">A</div>
+              <h5 class="text-white fw-bold mb-0">Andrés Olguín</h5>
+              <span class="badge bg-info text-dark mt-1">Estudiante UNAB - Nivel Pro</span>
+            </div>
+            <div class="p-3 bg-dark border border-secondary rounded small mb-3">
+              <div class="text-info fw-bold mb-1">Beneficios de Comunidad Activos:</div>
+              <div>• Envío gratuito en campus Viña del Mar y Santiago.</div>
+              <div>• Publicaciones con insignia de inspección técnica garantizada.</div>
+              <div>• Historial de órdenes con código de despacho criptográfico.</div>
+            </div>
+            <button class="btn btn-outline-danger w-100 btn-sm" id="btnCerrarSesion">Cerrar Sesión Activa</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
+  </div>
 
-  <!-- Bootstrap JS Bundle -->
+  <!-- TOAST FLOTANTE DE ACCIÓN EN CARRO -->
+  <div class="cart-floating-toast" id="cartToast">
+    <div class="d-flex align-items-center gap-2">
+      <i class="fa-solid fa-cart-arrow-down text-info fs-5"></i>
+      <div class="small text-white">
+        <strong id="toastItemName">1x Ítem</strong> agregado(s)<br>
+        <span class="text-info" id="toastItemCount">Carro activo: 1 ítem(s)</span>
+      </div>
+    </div>
+    <button class="btn btn-cyan btn-sm fw-bold rounded-pill px-3" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">Ver Carro</button>
+  </div>
+
+  <!-- BOOTSTRAP 5.3 JS BUNDLE -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Lógica Principal -->
+  <!-- LÓGICA JS MODULAR -->
   <script src="js/main.js"></script>
 </body>
 </html>
